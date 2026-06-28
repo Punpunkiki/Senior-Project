@@ -53,7 +53,14 @@ python -m src.download_data            # asks before downloading (~GB) from Mend
 (web/social images you collect) goes in **`./data_ood/`** with the same 10
 folders — it is used **only** for final evaluation ([DL-OOD]).
 
-## Run the full pipeline
+## Run on Google Colab (recommended — no local GPU needed)
+Open **`notebooks/02_colab_full_run.ipynb`** in Colab (set *Runtime ▸ GPU*) and
+run top to bottom. It clones this branch, installs the extras without breaking
+Colab's CUDA torch, gets the data (Mendeley download **or** Google Drive mount),
+runs every phase, and renders all figures/tables inline — then zips `outputs/`
+back to Drive. A Phase-4 cell offers a quick low-epoch pass before the full run.
+
+## Run the full pipeline (local / CLI)
 ```bash
 # Phase 1 — EDA (real counts, resolution, colour, duplicates)
 python -m src.eda                      # or open notebooks/01_eda.ipynb
