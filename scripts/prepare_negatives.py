@@ -37,13 +37,34 @@ log = get_logger("prep_neg")
 IMG_EXTS = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tif", ".tiff",
             ".JPG", ".JPEG", ".PNG", ".BMP", ".WEBP"}
 DEFAULT_EXCLUDE = ["durian"]   # keywords -> skip that fruit-type folder
+SPLIT_NAMES = {"train", "training", "test", "testing", "val", "valid",
+               "validation", "eval"}
 
 
 def _list_types(src: Path) -> Dict[str, List[Path]]:
-    """Return {type_name: [image paths]} from immediate sub-folders; if there are
-    no sub-folders, treat all images in src as a single '_root' type."""
+    """Return {fruit_type: [image paths]}.
+
+    Handles three layouts:
+      - <src>/<type>/...                          (per-type folders)
+      - <src>/{train,test,validation}/<type>/...  (split-wrapped; unions types
+        across splits — e.g. the kritikseth 36-class fruit/veg dataset)
+      - <src>/*.jpg                               (flat -> single '_root' type)
+    """
     subdirs = [p for p in sorted(src.iterdir()) if p.is_dir()]
     types: Dict[str, List[Path]] = {}
+
+    # split-wrapped: descend one level and merge same-named type folders
+    if subdirs and all(d.name.lower() in SPLIT_NAMES for d in subdirs):
+        for sp in subdirs:
+            for d in sorted(p for p in sp.iterdir() if p.is_dir()):
+                imgs = [p for p in d.rglob("*") if p.suffix in IMG_EXTS]
+                if imgs:
+                    types.setdefault(d.name, []).extend(imgs)
+        if types:
+            log.info("Detected split wrapper %s -> using sub-folders as types.",
+                     [d.name for d in subdirs])
+            return types
+
     if subdirs:
         for d in subdirs:
             imgs = [p for p in d.rglob("*") if p.suffix in IMG_EXTS]
