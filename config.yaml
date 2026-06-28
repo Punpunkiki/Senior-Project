@@ -28,7 +28,7 @@ paths:
 # ----------------------------------------------------------------------------
 data:
   image_format: jpeg          # jpeg | png
-  num_classes: 10
+  num_classes: 12             # 10 diseases + Healthy + not_durian ([DL-CLASSES])
   classes:
     - Anthracnose
     - Canker
@@ -40,6 +40,8 @@ data:
     - Stem_cracking_gummosis
     - Thrips
     - Yellow_leaf
+    - Healthy                 # durian, no disease (closed-set state) [DL-CLASSES]
+    - not_durian              # explicit reject class (open-set negatives) [DL-CLASSES]
   # Substrings used to fuzzy-match canonical labels to on-disk folder names.
   folder_aliases:
     Anthracnose: ["anthracnose", "anthrac"]
@@ -52,6 +54,9 @@ data:
     Stem_cracking_gummosis: ["gummosis", "stem crack", "cracking", "gum"]
     Thrips: ["thrips", "thrip"]
     Yellow_leaf: ["yellow", "yellow leaf", "yellow_leaf"]
+    Healthy: ["healthy", "health", "no disease", "normal"]
+    not_durian: ["not_durian", "not durian", "notdurian", "non_durian",
+                 "non durian", "negative", "negatives", "other_fruit"]
 
 # ----------------------------------------------------------------------------
 # Splitting & leakage control.  [DL-SPLIT] [DL-GROUP] [DL-OOD]

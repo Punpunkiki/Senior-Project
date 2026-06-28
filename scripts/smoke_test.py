@@ -43,11 +43,12 @@ def main() -> int:
     try:
         import pandas as pd
         from src.data import make_splits
+        nc = cfg["data"]["num_classes"]
         n = 600
         rng = np.random.default_rng(0)
         df = pd.DataFrame({
             "path": [f"img_{i}.jpg" for i in range(n)],
-            "label": rng.integers(0, 10, n),
+            "label": rng.integers(0, nc, n),
         })
         df["label_idx"] = df["label"]
         df["group"] = rng.integers(0, 200, n)          # 200 groups (some shared)
@@ -66,8 +67,9 @@ def main() -> int:
         from src.evaluate import (choose_threshold, compute_metrics,
                                   expected_calibration_error, fit_temperature,
                                   softmax)
-        y = np.random.randint(0, 10, 300)
-        logits = np.random.randn(300, 10) * 2
+        nc = cfg["data"]["num_classes"]
+        y = np.random.randint(0, nc, 300)
+        logits = np.random.randn(300, nc) * 2
         logits[np.arange(300), y] += 3.0               # make it better-than-chance
         probs = softmax(logits)
         m = compute_metrics(y, probs.argmax(1), cfg["data"]["classes"])

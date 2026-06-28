@@ -1,7 +1,8 @@
 # Durian Disease Classification — Modelling Core (Senior Project)
 
-A defensible, thesis-grade pipeline for a **10-class durian disease image
-classifier**, built around one central research question:
+A defensible, thesis-grade pipeline for a **12-class durian classifier**
+(10 diseases + `Healthy` + `not_durian`), built around one central research
+question:
 
 > **Is the model learning real disease features, or just memorising
 > Mendeley-dataset artifacts (backgrounds / capture setup)?**
@@ -10,8 +11,12 @@ Every methodological choice is justified in **`reports/DECISION_LOG.md`**
 (Decision → Why → Alternatives → Why not). Final numbers go in
 **`reports/RESULTS.md`**.
 
-The 10 classes: Anthracnose, Canker, Fruit rot, Mealybug infestation, Pink
-disease, Sooty mold, Stem blight, Stem cracking gummosis, Thrips, Yellow leaf.
+The 12 classes: the 10 diseases (Anthracnose, Canker, Fruit rot, Mealybug
+infestation, Pink disease, Sooty mold, Stem blight, Stem cracking gummosis,
+Thrips, Yellow leaf) plus **Healthy** (durian, no disease) and **not_durian**
+(explicit reject class for non-durian inputs). See [DL-CLASSES] for the rationale
+and the open-set caveats; abstain/OOD ([DL-THRESH]) is kept as a second safety
+net on top of the `not_durian` class.
 
 ---
 
@@ -49,9 +54,16 @@ python -m src.download_data            # asks before downloading (~GB) from Mend
 # If your network blocks data.mendeley.com, download the ZIP manually from
 # https://data.mendeley.com/datasets/mhjwyb5p48/1 and unzip into ./data/
 ```
-`./data/` must end up with **10 class sub-folders**. The quarantined OOD set
-(web/social images you collect) goes in **`./data_ood/`** with the same 10
-folders — it is used **only** for final evaluation ([DL-OOD]).
+`./data/` must end up with **12 class sub-folders**: the 10 disease folders from
+Mendeley plus a **`Healthy/`** folder and a **`not_durian/`** folder you add
+yourself (folder names are fuzzy-matched, so minor naming differences are fine;
+save images as **JPG** to match `image_format: jpeg`). Suggested sources are in
+[DL-CLASSES] (e.g. Vietnamese durian-leaf datasets for Healthy; Fruits-262 +
+other-crop leaves for not_durian — avoid clean-white-background-only negatives).
+
+The quarantined covariate-shift OOD set (web/social images of the **same
+diseases**) goes in **`./data_ood/`** and is used **only** for final evaluation
+([DL-OOD]) — keep it separate from the `not_durian` *training* negatives.
 
 ## Run on Google Colab (recommended — no local GPU needed)
 Open **`notebooks/02_colab_full_run.ipynb`** in Colab (set *Runtime ▸ GPU*) and

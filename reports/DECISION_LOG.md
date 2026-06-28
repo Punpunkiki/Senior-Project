@@ -63,6 +63,47 @@ are mirrored as comments in `config.yaml` and `src/*.py`.
 - **Why not:** Exact hashing misses re-encodes/crops; embedding dedup needs a
   model and is heavier; ignoring them is the leakage we must prevent.
 
+### [DL-CLASSES] Label space — adding `Healthy` and `not_durian`
+- **Decision:** Extend the 10 diseases to **12 classes** by adding **`Healthy`**
+  (durian with no disease) and **`not_durian`** (an explicit reject class for
+  non-durian inputs). The confidence-threshold abstain ([DL-THRESH]) is *kept* as
+  a second safety net on top of the `not_durian` class.
+- **Why:** Deployment reality — a packing-house/farmer camera sees mostly healthy
+  fruit and occasional non-durian frames. Without `Healthy`, a healthy fruit is
+  force-labelled as a disease (false alarm). `not_durian` gives an always-on
+  reject behaviour without relying solely on a tuned threshold.
+- **Alternatives & why not (the core trade-off):**
+  - *`Healthy` as a class* — accepted: it is **closed-set** (still durian, a
+    well-defined state), so a softmax class models it cleanly.
+  - *`not_durian` is fundamentally **open-set*** ("everything that isn't
+    durian"). A single softmax class cannot bound an unlimited concept, and a
+    closed negative set teaches only the negatives shown — novel non-durian
+    images can still be classified confidently as a disease, and the class tends
+    to learn a **background shortcut** (e.g. "clean white background ⇒
+    not_durian") rather than "absence of durian". This is the *same* artifact
+    failure the project studies, so we (a) train it on **diverse, natural-
+    background hard negatives** (other fruits in real scenes + other-crop leaves
+    + some generic images), explicitly avoiding clean-background-only sources,
+    and (b) **retain the calibrated-confidence abstain** as the principled
+    open-set defence and report both. Pure-abstain (no reject class) was the
+    rejected alternative — chosen against here only because the user wants
+    always-on behaviour; its rigour is preserved by keeping abstain active.
+- **Caveats recorded for the report:** `Healthy` images come from a *different*
+  orchard/camera than Mendeley, so the class risks being separable by capture
+  artifact rather than by health (the central question, now *inside* the label
+  set); and `Healthy` must include leaf/branch/fruit examples or the model learns
+  "healthy = leaf shape". `not_durian` generalisation to unseen negatives is
+  inherently limited — quantify it with held-out negative sources never seen in
+  training.
+- **Data sources used:** `Healthy` — Vietnamese real-field durian leaf datasets
+  (e.g. the Binh Phuoc/Tien Giang set; Kaggle durian-leaf sets) for domain match;
+  `not_durian` — Fruits-262 (natural backgrounds), other-crop leaves
+  (PlantDoc/PlantVillage), plus a small generic sample. Fruits-360 used at most as
+  a minor easy-negative supplement (clean-background bias).
+- **Mechanics:** purely config-driven — `data.num_classes: 12`, two entries added
+  to `data.classes` and `data.folder_aliases`. Put images in `data/Healthy/` and
+  `data/not_durian/` (save as **JPG** to match `image_format: jpeg`).
+
 ---
 
 ## Phase 2 — Splitting & leakage

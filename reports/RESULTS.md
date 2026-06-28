@@ -19,9 +19,14 @@ python -m src.compare  --all
 ---
 
 ## 1. Dataset (verified, Phase 1)
-| Property | Proposal claim | Verified (run `src.eda`) |
+**12 classes** = 10 Mendeley diseases + `Healthy` + `not_durian` ([DL-CLASSES]).
+`Healthy` and `not_durian` are sourced externally (different cameras/orchards),
+so report their counts and **domain-shift caveat** separately from the Mendeley
+10. The proposal's 4,000/400-balanced claim applies only to the 10 diseases.
+
+| Property | Proposal claim (10 diseases) | Verified (run `src.eda`) |
 |---|---|---|
-| Total images | 4,000 | `[[total]]` |
+| Total images | 4,000 | `[[total]]` (incl. `[[n_healthy]]` Healthy, `[[n_notdurian]]` not_durian) |
 | Per-class | 400 (balanced) | `[[min]]–[[max]]` per class |
 | max/min ratio | 1.00 | `[[ratio]]` |
 | Primary format | — | JPEG (raw) — see [DL-FORMAT] |
