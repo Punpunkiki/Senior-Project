@@ -27,7 +27,7 @@ paths:
 # names found on disk (Phase 1 prints any mismatch).
 # ----------------------------------------------------------------------------
 data:
-  image_format: jpeg          # jpeg | png
+  image_format: jpeg          # jpeg | png | any  (use 'any' if Healthy/not_durian are PNG)
   num_classes: 12             # 10 diseases + Healthy + not_durian ([DL-CLASSES])
   classes:
     - Anthracnose

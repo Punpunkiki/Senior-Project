@@ -26,6 +26,10 @@ log = get_logger("data")
 IMG_EXT = {
     "jpeg": (".jpg", ".jpeg", ".JPG", ".JPEG"),
     "png": (".png", ".PNG"),
+    # 'any' accepts every common format -> use it if Healthy/not_durian are PNG
+    # etc. (set data.image_format: any in config.yaml).
+    "any": (".jpg", ".jpeg", ".png", ".bmp", ".webp",
+            ".JPG", ".JPEG", ".PNG", ".BMP", ".WEBP"),
 }
 
 
@@ -214,6 +218,11 @@ def _report_counts(df: pd.DataFrame, classes: List[str], fmt: str) -> None:
     imbalance = counts.max() / max(counts.min(), 1)
     log.info("max/min class ratio = %.2f (proposal claimed perfectly balanced)",
              imbalance)
+    missing = [c for c in classes if counts[c] == 0]
+    if missing:
+        log.warning("These classes have 0 '%s' images: %s. If the files exist in "
+                    "a different format, set data.image_format: any (or png) in "
+                    "config.yaml.", fmt, missing)
 
 
 # --------------------------------------------------------------------------- #
