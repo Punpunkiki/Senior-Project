@@ -1,0 +1,33 @@
+# ============================================================================
+# requirements.txt  --  pinned for reproducibility.
+# Tested target: Python 3.10/3.11, CUDA 12.x GPU (Colab/Kaggle T4 or local).
+#
+# INSTALL (GPU, Colab/Kaggle usually have torch pre-installed):
+#   pip install -r requirements.txt
+# INSTALL (CPU only, for smoke testing the code path):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+#   pip install -r requirements.txt
+#
+# Pins are conservative lower-bounds with known-good combinations; loosen only
+# if your CUDA build forces a different torch.
+# ============================================================================
+
+torch>=2.2,<2.7
+torchvision>=0.17,<0.22
+timm>=1.0.7                # ConvNeXt-V2 / Swin / EfficientNet model cards
+numpy>=1.26,<2.2
+pandas>=2.1
+scikit-learn>=1.4         # splits, metrics, classification_report
+pillow>=10.2
+imagehash>=4.3            # perceptual hashing for near-duplicate / group split
+PyYAML>=6.0
+tqdm>=4.66
+matplotlib>=3.8
+seaborn>=0.13             # confusion-matrix / distribution plots
+tabulate>=0.9             # pandas.to_markdown for the comparison table
+grad-cam>=1.5             # pytorch-grad-cam (Grad-CAM + reshape transforms)
+
+# --- dev / notebook only ---
+jupyter>=1.0
+nbformat>=5.9
+requests>=2.31            # used by src/download_data.py

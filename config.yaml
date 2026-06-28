@@ -1,0 +1,212 @@
+# ============================================================================
+# config.yaml  --  SINGLE SOURCE OF TRUTH for the durian-disease pipeline.
+# No magic numbers live in src/*.py; everything tunable lives here.
+# Every block is cross-referenced to a Decision Log entry in
+# reports/DECISION_LOG.md (search for the tag, e.g. [DL-SPLIT]).
+# ============================================================================
+
+seed: 42                      # global seed (numpy / torch / cuda / python random)
+deterministic: true           # set torch deterministic algorithms where possible
+
+# ----------------------------------------------------------------------------
+# Paths.  data_root must contain 10 class sub-folders (auto-detected).
+# ----------------------------------------------------------------------------
+paths:
+  data_root: ./data           # Mendeley primary dataset (10 class folders)
+  ood_root: ./data_ood        # QUARANTINED web/social-media OOD set (eval only)
+  outputs_dir: ./outputs
+  reports_dir: ./reports
+  splits_file: ./outputs/splits.json
+  eda_dir: ./outputs/eda
+
+# ----------------------------------------------------------------------------
+# Data.  image_format chooses the PRIMARY training input.  [DL-FORMAT]
+#   jpeg = raw full-frame JPEG  (default; matches deployment messiness)
+#   png  = cropped PNG          (background removed; used as ablation probe)
+# Class names are the canonical labels; data.py maps them to the real folder
+# names found on disk (Phase 1 prints any mismatch).
+# ----------------------------------------------------------------------------
+data:
+  image_format: jpeg          # jpeg | png
+  num_classes: 10
+  classes:
+    - Anthracnose
+    - Canker
+    - Fruit_rot
+    - Mealybug_infestation
+    - Pink_disease
+    - Sooty_mold
+    - Stem_blight
+    - Stem_cracking_gummosis
+    - Thrips
+    - Yellow_leaf
+  # Substrings used to fuzzy-match canonical labels to on-disk folder names.
+  folder_aliases:
+    Anthracnose: ["anthracnose", "anthrac"]
+    Canker: ["canker"]
+    Fruit_rot: ["fruit rot", "fruit_rot", "fruitrot", "rot"]
+    Mealybug_infestation: ["mealybug", "mealy", "mealy bug"]
+    Pink_disease: ["pink"]
+    Sooty_mold: ["sooty", "sooty mold", "sooty mould"]
+    Stem_blight: ["stem blight", "stem_blight", "blight"]
+    Stem_cracking_gummosis: ["gummosis", "stem crack", "cracking", "gum"]
+    Thrips: ["thrips", "thrip"]
+    Yellow_leaf: ["yellow", "yellow leaf", "yellow_leaf"]
+
+# ----------------------------------------------------------------------------
+# Splitting & leakage control.  [DL-SPLIT] [DL-GROUP] [DL-OOD]
+# ----------------------------------------------------------------------------
+split:
+  method: group_stratified    # group_stratified | stratified | random
+  train: 0.70
+  val: 0.15
+  test: 0.15
+  group:                       # near-duplicate grouping to prevent leakage
+    use_perceptual_hash: true
+    phash_size: 16             # imagehash phash hash_size
+    near_dup_hamming: 6        # Hamming distance <= this => same group (near-dup)
+
+# ----------------------------------------------------------------------------
+# Normalization.  [DL-NORM]  ImageNet stats are the default for transfer.
+# dataset_mean/std are filled by Phase-1 EDA (informational / for ablation).
+# ----------------------------------------------------------------------------
+normalization:
+  use_imagenet_stats: true
+  imagenet_mean: [0.485, 0.456, 0.406]
+  imagenet_std:  [0.229, 0.224, 0.225]
+  dataset_mean: null
+  dataset_std:  null
+
+# ----------------------------------------------------------------------------
+# Image geometry.  [DL-RESIZE]
+# ----------------------------------------------------------------------------
+image:
+  size: 224                   # all 3 backbones were pretrained at 224
+  resize_shorter: 256         # resize then center-crop for val/test
+  interpolation: bilinear     # bilinear | bicubic
+
+# ----------------------------------------------------------------------------
+# Augmentation.  Surgical, not maximal.  Each ON/OFF is a Decision Log entry.
+# [DL-AUG-ON] (enabled) and [DL-AUG-OFF] (deliberately disabled).
+# ----------------------------------------------------------------------------
+augment:
+  random_resized_crop:
+    enabled: true
+    scale: [0.70, 1.00]
+    ratio: [0.75, 1.333]
+  horizontal_flip: 0.5
+  rotation_degrees: 15        # mild; field photos are roughly upright
+  color_jitter:
+    enabled: true
+    brightness: 0.20          # ON: mimics uncontrolled field lighting
+    contrast: 0.20            # ON
+    saturation: 0.0           # OFF [DL-AUG-OFF]: protects colour-defined classes
+    hue: 0.0                  # OFF [DL-AUG-OFF]: hue defines Yellow/Pink/Sooty
+  randaugment:
+    enabled: false            # [DL-AUG-OFF]: default ops include hue/posterize
+    num_ops: 2
+    magnitude: 7
+  trivialaugment:
+    enabled: false            # alternative to randaugment; same colour concern
+  mixup:
+    enabled: false            # optional regulariser; off by default [DL-AUG-OFF]
+    alpha: 0.2
+  cutmix:
+    enabled: false
+    alpha: 1.0
+  # ALWAYS OFF (hard-coded rationale in DECISION_LOG, not a toggle):
+  #   vertical_flip, 180-deg rotation  -> gravity cues (gum runs downward)
+  #   grayscale / channel drop         -> destroys colour-defined classes
+  #   heavy gaussian blur              -> erases small thrips/anthracnose lesions
+
+# ----------------------------------------------------------------------------
+# Models.  3 architectures spanning distinct inductive biases.  [DL-MODELS]
+# timm_id values are the ones to fetch from the HF hub / timm.
+# ----------------------------------------------------------------------------
+models:
+  - name: convnextv2_tiny
+    timm_id: convnextv2_tiny.fcmae_ft_in22k_in1k
+    input_size: 224
+    family: modern_cnn
+  - name: swin_tiny
+    timm_id: swin_tiny_patch4_window7_224.ms_in1k
+    input_size: 224
+    family: hierarchical_transformer
+  - name: efficientnet_b0
+    timm_id: efficientnet_b0.ra_in1k
+    input_size: 224
+    family: efficient_cnn
+
+# ----------------------------------------------------------------------------
+# Training.  [DL-PRETRAIN] [DL-FINETUNE] [DL-LOSS] [DL-OPT] [DL-STOP]
+# ----------------------------------------------------------------------------
+train:
+  epochs: 50
+  batch_size: 32
+  num_workers: 4
+  pretrained: true            # [DL-PRETRAIN] ImageNet weights, never from scratch
+  amp: true                   # mixed precision (no-op on CPU)
+  grad_clip_norm: 1.0
+  finetune:
+    strategy: full_llrd       # linear_probe | full | full_llrd | gradual
+    linear_probe_warmup_epochs: 3
+    layer_lr_decay: 0.80      # layer-wise LR decay factor (LLRD)
+  optimizer:
+    name: adamw               # [DL-OPT] AdamW (transformers train poorly w/ SGD)
+    lr: 0.0005                # head / new-param LR
+    backbone_lr: 0.00005      # base backbone LR (scaled per-layer by LLRD)
+    weight_decay: 0.05
+  scheduler:
+    name: cosine              # cosine decay
+    warmup_epochs: 3          # linear warmup (critical for Swin)
+    min_lr: 0.000001
+  loss:
+    name: ce_label_smoothing  # ce | ce_label_smoothing | focal
+    label_smoothing: 0.1
+    focal_gamma: 2.0
+    class_weights: null       # set by Phase 11 only if EDA shows imbalance
+  early_stopping:
+    monitor: val_macro_f1     # [DL-STOP] select on per-class fairness, not acc
+    mode: max
+    patience: 10
+    min_delta: 0.001
+
+# ----------------------------------------------------------------------------
+# Evaluation & calibration.  [DL-METRICS]
+# ----------------------------------------------------------------------------
+eval:
+  calibration_bins: 15        # ECE / reliability-diagram bins
+  tta:
+    enabled: false            # turned on only in Phase 11 if it helps
+    flips: true
+    scales: [1.0]
+
+# ----------------------------------------------------------------------------
+# Confidence thresholding / abstain / OOD.  [DL-THRESH]
+# ----------------------------------------------------------------------------
+threshold:
+  temperature_scaling: true   # calibrate-then-threshold
+  method: precision_coverage  # precision_coverage | id_ood_separation
+  target_precision: 0.95      # used by precision_coverage
+  sweep_start: 0.0
+  sweep_stop: 1.0
+  sweep_steps: 101
+
+# ----------------------------------------------------------------------------
+# Interpretability.  [DL-INTERPRET]
+# ----------------------------------------------------------------------------
+interpret:
+  method_cnn: gradcam
+  method_transformer: gradcam_reshape   # gradcam w/ reshape | attention_rollout
+  examples_per_class: 4
+  occlusion_test: true        # quantitative "looks at lesion vs background" proxy
+  occlusion_patch: 32
+
+# ----------------------------------------------------------------------------
+# CPU / quick smoke-test mode (subset + few epochs) so the code is runnable
+# without a GPU or the full dataset.  Enable with: --smoke   (see train.py)
+# ----------------------------------------------------------------------------
+smoke_test:
+  subset_per_class: 20
+  epochs: 2
+  batch_size: 8
