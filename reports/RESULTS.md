@@ -32,6 +32,7 @@ so report their counts and **domain-shift caveat** separately from the Mendeley
 | Primary format | — | JPEG (raw) — see [DL-FORMAT] |
 | Near-duplicate groups | — | `[[n_groups]]` (`[[n_dups]]` dupes collapsed) |
 | Cross-class dupe groups | — | `[[n_cross]]` (artifact/leakage signal) |
+| **Cross-split leakage** (predefined split) | — | `[[n_cross_split]]` near-dup groups span Train/Val/Test ([DL-PRESPLIT], `outputs/leakage_audit.json`) — **disclose this** |
 
 Median resolution `[[WxH]]`; dataset mean/std `[[mean]]` / `[[std]]` (ImageNet
 stats used for training — [DL-NORM]).

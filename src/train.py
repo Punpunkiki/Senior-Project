@@ -96,7 +96,34 @@ def build_scheduler(cfg: Dict[str, Any], optimizer, total_epochs: int):
 # Data prep (shared with evaluate.py)
 # --------------------------------------------------------------------------- #
 def prepare_dataframe(cfg: Dict[str, Any], seed: int):
-    """Build (or reuse) the split dataframe so train/eval see identical splits."""
+    """Build (or reuse) the split dataframe so train/eval see identical splits.
+
+    Two modes (config.split.method):
+      - 'predefined': honour on-disk Train/Validation/Test folders ([DL-PRESPLIT])
+        and AUDIT them for cross-split near-duplicate leakage.
+      - else: discover the flat layout, group by pHash, and make a group-aware
+        stratified split ([DL-SPLIT]/[DL-GROUP]).
+    """
+    from .data import (audit_split_leakage, discover_predefined_split,
+                       save_splits as _save)
+
+    if cfg["split"]["method"] == "predefined":
+        # Discovery is cheap (no image reads) so we always re-scan -> newly added
+        # class folders are picked up. The leakage audit is the only expensive
+        # step (pHash over every image) so we run it once and cache the report.
+        df = discover_predefined_split(cfg)
+        if cfg["split"].get("audit_leakage", True):
+            from .utils import save_json
+            audit_path = Path(cfg["paths"]["outputs_dir"]) / "leakage_audit.json"
+            if audit_path.exists():
+                log.info("Reusing cached leakage audit: %s "
+                         "(delete it to re-audit).", audit_path)
+            else:
+                rep, _ = audit_split_leakage(cfg, df)
+                save_json(rep, str(audit_path))
+        _save(df, cfg["paths"]["splits_file"])  # save_splits adds group if missing
+        return df
+
     splits_file = cfg["paths"]["splits_file"]
     if Path(splits_file).exists():
         log.info("Reusing existing splits: %s", splits_file)

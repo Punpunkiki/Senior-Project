@@ -41,8 +41,12 @@ def main() -> int:
     # 2) group-stratified split on a synthetic dataframe ---------------------
     print("2) leakage-safe split")
     try:
+        import copy
+
         import pandas as pd
         from src.data import make_splits
+        scfg = copy.deepcopy(cfg)
+        scfg["split"]["method"] = "group_stratified"  # exercise the algorithm
         nc = cfg["data"]["num_classes"]
         n = 600
         rng = np.random.default_rng(0)
@@ -52,7 +56,7 @@ def main() -> int:
         })
         df["label_idx"] = df["label"]
         df["group"] = rng.integers(0, 200, n)          # 200 groups (some shared)
-        out = make_splits(cfg, df, cfg["seed"])
+        out = make_splits(scfg, df, cfg["seed"])
         # assert no group spans two splits
         g = out.groupby("group")["split"].nunique()
         assert (g == 1).all(), "group leakage!"

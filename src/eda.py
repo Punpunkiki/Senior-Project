@@ -22,7 +22,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 
-from .data import assign_groups, discover_images
+from .data import assign_groups, discover_images, load_full_dataframe
 from .utils import ensure_dir, get_logger, load_config, save_json
 
 log = get_logger("eda")
@@ -113,7 +113,6 @@ def brightness_and_norm(df: pd.DataFrame, classes, out_dir: Path,
 def duplicate_report(cfg, df: pd.DataFrame, out_dir: Path) -> Dict[str, Any]:
     grouped = assign_groups(cfg, df)
     sizes = grouped["group"].value_counts()
-    dup_groups = sizes[sizes > 1]
     # leakage flag: groups whose members span >1 class (background-driven dupes)
     cross = (grouped.groupby("group")["label"].nunique())
     cross_class = cross[cross > 1]
@@ -128,6 +127,15 @@ def duplicate_report(cfg, df: pd.DataFrame, out_dir: Path) -> Dict[str, Any]:
                  "are a strong artifact/leakage signal -> group-aware split "
                  "[DL-GROUP] is mandatory."),
     }
+    if "split" in grouped.columns:   # predefined split -> audit cross-split leakage
+        span = grouped.groupby("group")["split"].nunique()
+        leaky = span[span > 1]
+        report["n_cross_split_dup_groups"] = int(len(leaky))
+        report["n_images_in_cross_split_groups"] = int(
+            grouped["group"].isin(leaky.index).sum())
+        report["cross_split_note"] = ("Near-duplicates spanning the predefined "
+                                      "Train/Val/Test inflate the test score "
+                                      "([DL-PRESPLIT]); disclose this number.")
     save_json(report, out_dir / "duplicates.json")
     return report
 
@@ -135,7 +143,7 @@ def duplicate_report(cfg, df: pd.DataFrame, out_dir: Path) -> Dict[str, Any]:
 def run_eda(cfg) -> Dict[str, Any]:
     classes = cfg["data"]["classes"]
     out_dir = ensure_dir(cfg["paths"]["eda_dir"])
-    df = discover_images(cfg)
+    df = load_full_dataframe(cfg)   # handles flat OR predefined Train/Val/Test
     summary = {
         "image_format": cfg["data"]["image_format"],
         "class_counts": class_counts(df, classes, out_dir),

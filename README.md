@@ -54,16 +54,34 @@ python -m src.download_data            # asks before downloading (~GB) from Mend
 # If your network blocks data.mendeley.com, download the ZIP manually from
 # https://data.mendeley.com/datasets/mhjwyb5p48/1 and unzip into ./data/
 ```
-`./data/` must end up with **12 class sub-folders**: the 10 disease folders from
-Mendeley plus a **`Healthy/`** folder and a **`not_durian/`** folder you add
-yourself (folder names are fuzzy-matched, so minor naming differences are fine;
-save images as **JPG** to match `image_format: jpeg`). Suggested sources are in
-[DL-CLASSES] (e.g. Vietnamese durian-leaf datasets for Healthy; Fruits-262 +
-other-crop leaves for not_durian — avoid clean-white-background-only negatives).
+Two supported layouts (set `split.method` in `config.yaml`):
+
+**A) Predefined split (default — matches the project's Google Drive):**
+```
+data/
+├── Train/        ├── Validation/      └── Test/
+│   ├── Anthracnose/  ...                   ├── Anthracnose/  ...
+```
+i.e. `data/{Train,Validation,Test}/<class>/`. The pipeline honours these folders
+as-is (`split.method: predefined`, `split.predefined_dirs` maps the names) and
+runs a **leakage audit** (`outputs/leakage_audit.json`) for near-duplicates that
+span splits. `.DS_Store` and other non-image files are ignored automatically.
+
+**B) Flat layout (pipeline computes the split):** `data/<class>/...` with
+`split.method: group_stratified` — group-aware stratified 70/15/15.
+
+**Adding `Healthy` / `not_durian`:** either put them inside each of
+`Train/Validation/Test/` (you split them), **or** just drop them flat as
+`data/Healthy/` and `data/not_durian/` — in predefined mode any flat extra-class
+folder is **auto-split** (group-aware, same ratios) and merged in. Folder names
+are fuzzy-matched; **save images as JPG** (`image_format: jpeg`). Sources in
+[DL-CLASSES] (Vietnamese durian-leaf sets for Healthy; Fruits-262 + other-crop
+leaves for not_durian — avoid clean-white-background-only negatives).
 
 The quarantined covariate-shift OOD set (web/social images of the **same
-diseases**) goes in **`./data_ood/`** and is used **only** for final evaluation
-([DL-OOD]) — keep it separate from the `not_durian` *training* negatives.
+diseases**) goes in **`./data_ood/`** (flat `<class>/` layout) and is used
+**only** for final evaluation ([DL-OOD]) — keep it separate from the `not_durian`
+*training* negatives. It's optional; `evaluate --ood` simply skips it if absent.
 
 ## Run on Google Colab (recommended — no local GPU needed)
 Open **`notebooks/02_colab_full_run.ipynb`** in Colab (set *Runtime ▸ GPU*) and

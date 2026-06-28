@@ -42,35 +42,38 @@ def _match_canonical(folder_name: str, aliases: Dict[str, List[str]]) -> Optiona
     return best
 
 
-def discover_images(cfg: Dict[str, Any], data_root: Optional[str] = None,
-                    image_format: Optional[str] = None) -> pd.DataFrame:
-    """Walk class folders -> DataFrame[path, folder, label, label_idx].
-
-    Reports the TRUTH about counts/format mismatches vs the proposal.
-    """
-    root = Path(data_root or cfg["paths"]["data_root"])
-    fmt = (image_format or cfg["data"]["image_format"]).lower()
-    if not root.exists():
-        raise FileNotFoundError(
-            f"data_root '{root}' not found. Download the Mendeley dataset first "
-            f"(see src/download_data.py) so it contains 10 class sub-folders."
-        )
-    exts = IMG_EXT[fmt]
-    aliases = cfg["data"]["folder_aliases"]
-    classes = cfg["data"]["classes"]
-    label_to_idx = {c: i for i, c in enumerate(classes)}
-
-    rows = []
-    unmatched = []
+def _scan_class_dirs(root: Path, exts, aliases, label_to_idx) -> tuple:
+    """Scan one root for <class>/ sub-folders -> (rows, unmatched_names)."""
+    rows, unmatched = [], []
     for sub in sorted(p for p in root.iterdir() if p.is_dir()):
         canon = _match_canonical(sub.name, aliases)
         if canon is None:
             unmatched.append(sub.name)
             continue
-        files = [p for p in sub.rglob("*") if p.suffix in exts]
-        for fp in files:
-            rows.append({"path": str(fp), "folder": sub.name,
-                         "label": canon, "label_idx": label_to_idx[canon]})
+        for fp in sub.rglob("*"):           # .DS_Store etc. ignored by suffix filter
+            if fp.suffix in exts:
+                rows.append({"path": str(fp), "folder": sub.name,
+                             "label": canon, "label_idx": label_to_idx[canon]})
+    return rows, unmatched
+
+
+def discover_images(cfg: Dict[str, Any], data_root: Optional[str] = None,
+                    image_format: Optional[str] = None) -> pd.DataFrame:
+    """Flat layout: data_root/<class>/...  ->  DataFrame[path, folder, label,
+    label_idx].  Reports the TRUTH about counts/format mismatches vs the proposal.
+    """
+    root = Path(data_root or cfg["paths"]["data_root"])
+    fmt = (image_format or cfg["data"]["image_format"]).lower()
+    if not root.exists():
+        raise FileNotFoundError(
+            f"data_root '{root}' not found. Provide the dataset so it contains the "
+            f"class sub-folders (see README / src/download_data.py)."
+        )
+    exts = IMG_EXT[fmt]
+    classes = cfg["data"]["classes"]
+    label_to_idx = {c: i for i, c in enumerate(classes)}
+    rows, unmatched = _scan_class_dirs(root, exts, cfg["data"]["folder_aliases"],
+                                       label_to_idx)
     if unmatched:
         log.warning("Folders not matched to a canonical class: %s", unmatched)
     if not rows:
@@ -81,6 +84,125 @@ def discover_images(cfg: Dict[str, Any], data_root: Optional[str] = None,
     df = pd.DataFrame(rows)
     _report_counts(df, classes, fmt)
     return df
+
+
+def discover_predefined_split(cfg: Dict[str, Any]) -> pd.DataFrame:
+    """Pre-split layout: data_root/<SplitDir>/<class>/...  e.g.
+    Train/Validation/Test (the user's Google-Drive structure). Returns a
+    DataFrame with the 'split' column already set from the folder names.
+    ([DL-PRESPLIT])
+    """
+    root = Path(cfg["paths"]["data_root"])
+    fmt = cfg["data"]["image_format"].lower()
+    exts = IMG_EXT[fmt]
+    classes = cfg["data"]["classes"]
+    label_to_idx = {c: i for i, c in enumerate(classes)}
+    dirmap = cfg["split"]["predefined_dirs"]   # {train: Train, val: Validation, ...}
+
+    frames = []
+    for split_name, dirname in dirmap.items():
+        sdir = root / dirname
+        if not sdir.exists():
+            raise FileNotFoundError(
+                f"Predefined-split dir '{sdir}' not found. Expected "
+                f"{root}/{{{', '.join(dirmap.values())}}}/<class>/. "
+                f"Set split.predefined_dirs in config.yaml to match your folders."
+            )
+        rows, unmatched = _scan_class_dirs(sdir, exts, cfg["data"]["folder_aliases"],
+                                           label_to_idx)
+        if unmatched:
+            log.warning("[%s] folders not matched to a class: %s", dirname, unmatched)
+        f = pd.DataFrame(rows)
+        f["split"] = split_name
+        frames.append(f)
+    df = pd.concat(frames, ignore_index=True)
+    if df.empty:
+        raise RuntimeError(f"No '{fmt}' images found under predefined split dirs.")
+
+    # Convenience: auto-split any FLAT extra-class folders at data_root (e.g. a
+    # freshly-added data/Healthy or data/not_durian that isn't pre-split). They
+    # get a group-aware stratified split and are merged into Train/Val/Test.
+    extra = _discover_extra_flat_classes(cfg, root, exts, dirmap, label_to_idx)
+    if extra is not None and len(extra):
+        extra = _autosplit_extra(cfg, extra)
+        df = pd.concat([df, extra[df.columns]], ignore_index=True)
+        log.info("Merged %d auto-split extra-class image(s) from flat folders: %s",
+                 len(extra), sorted(extra["label"].unique()))
+
+    _report_counts(df, classes, fmt)
+    _report_split(df, classes)
+    return df
+
+
+def _discover_extra_flat_classes(cfg, root, exts, dirmap, label_to_idx):
+    """Find class folders sitting flat at data_root (NOT inside the predefined
+    split dirs) so they can be auto-split and merged in."""
+    split_dirs = {v.lower() for v in dirmap.values()}
+    rows = []
+    for sub in (p for p in root.iterdir() if p.is_dir()):
+        if sub.name.lower() in split_dirs:
+            continue
+        canon = _match_canonical(sub.name, cfg["data"]["folder_aliases"])
+        if canon is None:
+            continue
+        for fp in sub.rglob("*"):
+            if fp.suffix in exts:
+                rows.append({"path": str(fp), "folder": sub.name,
+                             "label": canon, "label_idx": label_to_idx[canon]})
+    return pd.DataFrame(rows) if rows else None
+
+
+def _autosplit_extra(cfg, extra: pd.DataFrame) -> pd.DataFrame:
+    """Group-aware stratified split of the flat extra classes, using the ratios
+    in config.split. Falls back to plain stratified if groups are too few."""
+    import copy
+    sub = copy.deepcopy(cfg)
+    extra = assign_groups(cfg, extra)
+    for method in ("group_stratified", "stratified", "random"):
+        try:
+            sub["split"]["method"] = method
+            out = make_splits(sub, extra, cfg["seed"])
+            if method != "group_stratified":
+                log.warning("Extra-class auto-split fell back to '%s' (too few "
+                            "groups for group-aware split).", method)
+            return out
+        except Exception as e:
+            last = e
+    raise RuntimeError(f"Could not auto-split extra classes: {last}")
+
+
+def audit_split_leakage(cfg: Dict[str, Any], df: pd.DataFrame) -> Dict[str, Any]:
+    """For a PREDEFINED split we cannot enforce group-awareness, so we AUDIT it:
+    detect near-duplicates (pHash) that straddle train/val/test. A non-zero count
+    is a leakage warning the report must disclose ([DL-PRESPLIT]).
+
+    Returns (report_dict, grouped_df) where grouped_df has a 'group' column.
+    """
+    if "split" not in df.columns:
+        return {}, df
+    grouped = df if "group" in df.columns else assign_groups(cfg, df)
+    span = grouped.groupby("group")["split"].nunique()
+    leaky_groups = span[span > 1]
+    leaky_imgs = int(grouped["group"].isin(leaky_groups.index).sum())
+    rep = {"n_cross_split_dup_groups": int(len(leaky_groups)),
+           "n_images_in_cross_split_groups": leaky_imgs,
+           "note": ("Near-duplicates spanning splits inflate the test score. "
+                    "Predefined split kept for comparability; disclose this number "
+                    "and consider de-duping or a group-aware re-split.")}
+    if len(leaky_groups):
+        log.warning("LEAKAGE AUDIT: %d near-duplicate group(s) span splits "
+                    "(%d images). See [DL-PRESPLIT].", len(leaky_groups), leaky_imgs)
+    else:
+        log.info("LEAKAGE AUDIT: no cross-split near-duplicates detected.")
+    return rep, grouped
+
+
+def load_full_dataframe(cfg: Dict[str, Any]) -> pd.DataFrame:
+    """Return the complete image DataFrame regardless of split mode (predefined
+    rows carry a 'split' column). Used by EDA so it works either way."""
+    if cfg["split"]["method"] == "predefined":
+        return discover_predefined_split(cfg)
+    return discover_images(cfg)
 
 
 def _report_counts(df: pd.DataFrame, classes: List[str], fmt: str) -> None:
@@ -240,6 +362,9 @@ def _report_split(df: pd.DataFrame, classes: List[str]) -> None:
 
 
 def save_splits(df: pd.DataFrame, path: str) -> None:
+    df = df.copy()
+    if "group" not in df.columns:          # predefined split w/o leakage audit
+        df["group"] = np.arange(len(df))
     save_json({"records": df[["path", "label", "label_idx", "group", "split"]]
                .to_dict(orient="records")}, path)
     log.info("Saved splits -> %s", path)

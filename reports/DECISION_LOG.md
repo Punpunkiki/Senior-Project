@@ -108,9 +108,35 @@ are mirrored as comments in `config.yaml` and `src/*.py`.
 
 ## Phase 2 — Splitting & leakage
 
+### [DL-PRESPLIT] Honouring an on-disk Train/Validation/Test split
+- **Decision:** When the data already ships as `Train/`, `Validation/`, `Test/`
+  folders (the project's current Google-Drive layout), **use that split as-is**
+  (`split.method: predefined`) instead of recomputing one. Any *flat* extra-class
+  folder added at the data root (e.g. a freshly downloaded `Healthy/` or
+  `not_durian/` that isn't pre-split) is **auto-split group-aware** to the same
+  70/15/15 ratios and merged into the predefined splits. We then run a **leakage
+  audit** (`outputs/leakage_audit.json`).
+- **Why:** Respecting a fixed split keeps results comparable across teammates /
+  experiments and avoids silently reshuffling data a supervisor may have curated.
+  The auto-split-extras convenience means the diseases stay on the official split
+  while the two new classes get a principled split without manual foldering.
+- **Why the leakage audit is mandatory here:** a predefined split gives up the
+  group-aware guarantee of [DL-GROUP] — if whoever made it split *randomly*,
+  near-duplicate photos of the same fruit can sit in both Train and Test and
+  inflate the test score. We cannot fix someone else's split blindly, but we
+  **measure** it: pHash near-duplicate clusters that span splits are counted and
+  reported. A non-zero count must be disclosed in `RESULTS.md` (and motivates an
+  optional de-dup or a `group_stratified` re-split).
+- **Alternatives:** ignore the folders and always re-split group-aware
+  (`split.method: group_stratified`); trust the predefined split without auditing.
+- **Why not:** Re-splitting breaks comparability with the supervised/official
+  split; trusting it blindly hides a real leakage risk the whole project is about.
+  Both remain one-line `config.yaml` switches.
+
 ### [DL-SPLIT] Split ratio & method
 - **Decision:** **70 / 15 / 15** train/val/test, **group-aware + stratified**
-  (`StratifiedGroupKFold` carving test then val).
+  (`StratifiedGroupKFold` carving test then val). *Used when `split.method` is not
+  `predefined`* (see [DL-PRESPLIT]).
 - **Why:** 70% gives each ~5k-image class enough samples to fine-tune; 15% val is
   large enough for stable macro-F1 model selection; 15% test gives a trustworthy
   final estimate. Stratify to keep all 10 classes proportional in every split;

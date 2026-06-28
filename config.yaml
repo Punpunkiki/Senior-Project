@@ -59,11 +59,19 @@ data:
                  "non durian", "negative", "negatives", "other_fruit"]
 
 # ----------------------------------------------------------------------------
-# Splitting & leakage control.  [DL-SPLIT] [DL-GROUP] [DL-OOD]
+# Splitting & leakage control.  [DL-SPLIT] [DL-GROUP] [DL-OOD] [DL-PRESPLIT]
 # ----------------------------------------------------------------------------
 split:
-  method: group_stratified    # group_stratified | stratified | random
-  train: 0.70
+  # predefined      = honour on-disk Train/Validation/Test folders (your data)
+  # group_stratified/stratified/random = pipeline computes the split from a flat
+  #                   data/<class>/ layout
+  method: predefined          # predefined | group_stratified | stratified | random
+  predefined_dirs:            # folder names under data_root for each split
+    train: Train
+    val: Validation
+    test: Test
+  audit_leakage: true         # pHash cross-split near-dup audit ([DL-PRESPLIT])
+  train: 0.70                 # ratios below are used only when method != predefined
   val: 0.15
   test: 0.15
   group:                       # near-duplicate grouping to prevent leakage
