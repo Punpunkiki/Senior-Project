@@ -78,6 +78,15 @@ are fuzzy-matched; **save images as JPG** (`image_format: jpeg`). Sources in
 [DL-CLASSES] (Vietnamese durian-leaf sets for Healthy; Fruits-262 + other-crop
 leaves for not_durian — avoid clean-white-background-only negatives).
 
+If your negatives come as **one sub-folder per fruit type** (e.g. Fruits-262),
+build a balanced `not_durian/` with the helper — it **excludes durian**, samples
+**evenly across types**, caps the total (so it doesn't dwarf the ~400/disease
+classes), converts to JPG, and can hold out unseen types for open-set testing:
+```bash
+python scripts/prepare_negatives.py --src /path/fruits-262 --dest data/not_durian \
+    --n 600 --holdout-frac 0.2 --holdout-dest data/not_durian_heldout
+```
+
 The quarantined covariate-shift OOD set (web/social images of the **same
 diseases**) goes in **`./data_ood/`** (flat `<class>/` layout) and is used
 **only** for final evaluation ([DL-OOD]) — keep it separate from the `not_durian`

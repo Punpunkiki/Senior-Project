@@ -103,6 +103,14 @@ are mirrored as comments in `config.yaml` and `src/*.py`.
 - **Mechanics:** purely config-driven — `data.num_classes: 12`, two entries added
   to `data.classes` and `data.folder_aliases`. Put images in `data/Healthy/` and
   `data/not_durian/` (save as **JPG** to match `image_format: jpeg`).
+- **Negative curation (`scripts/prepare_negatives.py`):** when negatives arrive as
+  one sub-folder per fruit type (e.g. Fruits-262), naive recursion would (a) pull
+  in any `durian/` sub-folder (label poisoning) and (b) add hundreds of thousands
+  of images, swamping the ~400/disease classes. The helper therefore **excludes
+  durian-like folders**, **samples evenly across fruit types** (diverse, not 90%
+  apples), **caps the total** to keep class balance, converts to JPG, and can
+  **hold out whole fruit types** as an unseen-negative set — the honest way to
+  measure open-set generalisation of the reject class.
 
 ---
 
