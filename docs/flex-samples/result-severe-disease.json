@@ -1,0 +1,443 @@
+{
+  "type": "bubble",
+  "size": "mega",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "backgroundColor": "#C0392B",
+    "paddingAll": "16px",
+    "spacing": "xs",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#FFFFFF33",
+        "cornerRadius": "12px",
+        "paddingAll": "4px",
+        "paddingStart": "10px",
+        "paddingEnd": "10px",
+        "flex": 0,
+        "contents": [
+          {
+            "type": "text",
+            "text": "รุนแรง",
+            "size": "xs",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "โรคราสีชมพู",
+        "size": "xxl",
+        "color": "#FFFFFF",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "sm"
+      },
+      {
+        "type": "text",
+        "text": "Pink disease · Erythricium salmonicolor",
+        "size": "sm",
+        "color": "#FFFFFFCC",
+        "wrap": true
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "paddingAll": "16px",
+    "backgroundColor": "#FFFFFF",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ความมั่นใจ",
+                "size": "xs",
+                "color": "#6B7280",
+                "wrap": true,
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "87%",
+                "size": "xs",
+                "color": "#C0392B",
+                "wrap": true,
+                "weight": "bold",
+                "align": "end"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "height": "12px",
+            "backgroundColor": "#D1D5DB",
+            "cornerRadius": "6px",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "width": "87%",
+                "height": "12px",
+                "backgroundColor": "#C0392B",
+                "cornerRadius": "6px",
+                "contents": [
+                  {
+                    "type": "filler"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "lg",
+        "color": "#D1D5DB"
+      },
+      {
+        "type": "text",
+        "text": "🔍 อาการที่พบ",
+        "size": "lg",
+        "color": "#1F5F3A",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "sm",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "พบเส้นใยสีขาวบนกิ่ง ต่อมาเปลี่ยนเป็นคราบสีชมพู",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "กิ่งที่ถูกทำลายแห้งตาย",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ใบเหลืองและค้างอยู่บนกิ่งไม่ร่วง",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "lg",
+        "color": "#D1D5DB"
+      },
+      {
+        "type": "text",
+        "text": "🦠 สาเหตุ",
+        "size": "lg",
+        "color": "#1F5F3A",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "sm",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "เชื้อรา Erythricium salmonicolor เข้าทำลายเปลือกกิ่ง",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ระบาดในสภาพชื้นและทรงพุ่มทึบ",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "lg",
+        "color": "#D1D5DB"
+      },
+      {
+        "type": "text",
+        "text": "🛠️ วิธีแก้ไขทันที",
+        "size": "lg",
+        "color": "#1F5F3A",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "sm",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ตัดกิ่งที่เป็นโรคออก แล้วนำไปเผาทำลาย",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ทาหรือพ่นสารกลุ่มคอปเปอร์บริเวณรอยตัดและกิ่งข้างเคียง",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "lg",
+        "color": "#D1D5DB"
+      },
+      {
+        "type": "text",
+        "text": "🛡️ วิธีป้องกัน",
+        "size": "lg",
+        "color": "#1F5F3A",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "sm",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ตัดแต่งทรงพุ่มให้โปร่ง ลดความชื้นสะสมในทรงพุ่ม",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "สำรวจกิ่งในทรงพุ่มสม่ำเสมอ โดยเฉพาะหลังฝนตกต่อเนื่อง",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "ผลนี้เป็นการประเมินเบื้องต้นจาก AI ควรปรึกษาเจ้าหน้าที่เกษตรก่อนใช้สารเคมี และใช้สารตามอัตราบนฉลากเสมอ",
+        "size": "xs",
+        "color": "#6B7280",
+        "wrap": true,
+        "margin": "lg"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "paddingAll": "12px",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "uri": "https://example.org/result/sample-id",
+          "label": "อ่านรายละเอียดเต็ม"
+        },
+        "color": "#1F5F3A"
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "text": "ตรวจโรคทุเรียน",
+          "label": "ตรวจรูปใหม่"
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "text": "ติดต่อเจ้าหน้าที่",
+          "label": "ปรึกษาเจ้าหน้าที่"
+        }
+      }
+    ]
+  }
+}

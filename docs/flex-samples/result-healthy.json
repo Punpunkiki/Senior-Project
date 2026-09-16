@@ -1,0 +1,231 @@
+{
+  "type": "bubble",
+  "size": "mega",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "backgroundColor": "#2E8B57",
+    "paddingAll": "16px",
+    "spacing": "xs",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#FFFFFF33",
+        "cornerRadius": "12px",
+        "paddingAll": "4px",
+        "paddingStart": "10px",
+        "paddingEnd": "10px",
+        "flex": 0,
+        "contents": [
+          {
+            "type": "text",
+            "text": "ปกติ",
+            "size": "xs",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "ต้นแข็งแรงดี",
+        "size": "xxl",
+        "color": "#FFFFFF",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "sm"
+      },
+      {
+        "type": "text",
+        "text": "Healthy",
+        "size": "sm",
+        "color": "#FFFFFFCC",
+        "wrap": true
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "paddingAll": "16px",
+    "backgroundColor": "#FFFFFF",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "ความมั่นใจ",
+                "size": "xs",
+                "color": "#6B7280",
+                "wrap": true,
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "96%",
+                "size": "xs",
+                "color": "#2E8B57",
+                "wrap": true,
+                "weight": "bold",
+                "align": "end"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "height": "12px",
+            "backgroundColor": "#D1D5DB",
+            "cornerRadius": "6px",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "width": "96%",
+                "height": "12px",
+                "backgroundColor": "#2E8B57",
+                "cornerRadius": "6px",
+                "contents": [
+                  {
+                    "type": "filler"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "ไม่พบร่องรอยของโรคในรูปนี้ ดูแลแบบนี้ต่อไปได้เลยครับ",
+        "size": "md",
+        "color": "#1E2A1E",
+        "wrap": true,
+        "margin": "lg"
+      },
+      {
+        "type": "separator",
+        "margin": "lg",
+        "color": "#D1D5DB"
+      },
+      {
+        "type": "text",
+        "text": "🌱 เคล็ดลับดูแลต้น",
+        "size": "lg",
+        "color": "#1F5F3A",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "sm",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ดูแลการระบายน้ำในแปลงไม่ให้มีน้ำขัง",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "•",
+                "size": "md",
+                "color": "#7A8B2E",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ตัดแต่งทรงพุ่มให้โปร่ง แสงส่องถึง",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "ผลนี้เป็นการประเมินเบื้องต้นจาก AI ควรปรึกษาเจ้าหน้าที่เกษตรก่อนใช้สารเคมี และใช้สารตามอัตราบนฉลากเสมอ",
+        "size": "xs",
+        "color": "#6B7280",
+        "wrap": true,
+        "margin": "lg"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "paddingAll": "12px",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "uri": "https://example.org/result/sample-id",
+          "label": "อ่านรายละเอียดเต็ม"
+        },
+        "color": "#1F5F3A"
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "text": "ตรวจโรคทุเรียน",
+          "label": "ตรวจรูปใหม่"
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "text": "ติดต่อเจ้าหน้าที่",
+          "label": "ปรึกษาเจ้าหน้าที่"
+        }
+      }
+    ]
+  }
+}

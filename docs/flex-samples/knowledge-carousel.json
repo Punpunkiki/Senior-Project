@@ -1,0 +1,625 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#E8871E",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคแอนแทรคโนส",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "Anthracnose",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "มีแผลสีน้ำตาล รูปร่างไม่แน่นอน ตามปลายใบและขอบใบ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/anthracnose",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#C0392B",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคราสีชมพู",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "Pink disease",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "พบเส้นใยสีขาวบนกิ่ง ต่อมาเปลี่ยนเป็นคราบสีชมพู",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/pink-disease",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคแคงเกอร์",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/canker",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคผลเน่า",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/fruit-rot",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เพลี้ยแป้ง",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/mealybug-infestation",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคราดำ",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/sooty-mold",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคลำต้นไหม้",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/stem-blight",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคลำต้นแตก-ยางไหล",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/stem-cracking-gummosis",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เพลี้ยไฟ",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/thrips",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#F2B705",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "อาการใบเหลือง",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "ข้อมูลกำลังจัดทำ",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/yellow-leaf",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    }
+  ]
+}

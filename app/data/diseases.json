@@ -1,0 +1,268 @@
+{
+  "_meta": {
+    "note": "Keys in 'class_name' MUST match config.yaml -> data.classes exactly. Entries with pending_expert_input=true are placeholders: the Thai label is a direct translation of the model's class name, but NO symptom/cause/treatment content has been written yet. The bot renders those as 'ข้อมูลกำลังจัดทำ' rather than guessing. See docs/knowledge-review.md.",
+    "reject_class": "not_durian is handled by app/diagnosis.py (tier NOT_DURIAN) and deliberately has no disease entry here.",
+    "dosage_policy": "chemical_options never carry numeric application rates -- always 'ใช้ตามอัตราบนฉลาก'."
+  },
+  "diseases": [
+    {
+      "class_name": "Anthracnose",
+      "slug": "anthracnose",
+      "name_th": "โรคแอนแทรคโนส",
+      "name_en": "Anthracnose",
+      "pathogen": "Colletotrichum sp.",
+      "type": "fungus",
+      "severity": "moderate",
+      "affected_parts": ["ใบ"],
+      "symptoms": [
+        "มีแผลสีน้ำตาล รูปร่างไม่แน่นอน ตามปลายใบและขอบใบ",
+        "แผลขยายลุกลามเข้าหากลางใบ",
+        "ใบที่เป็นมากจะแห้งและร่วง"
+      ],
+      "causes_conditions": [
+        "เชื้อรา Colletotrichum sp. เข้าทำลายใบ",
+        "ระบาดมากเมื่อความชื้นสูงและทรงพุ่มแน่นทึบ"
+      ],
+      "immediate_actions": [
+        "ตัดแต่งใบและกิ่งที่เป็นโรคออก",
+        "เก็บใบที่ร่วงไปเผาทำลายนอกแปลง",
+        "พ่นสารป้องกันกำจัดเชื้อรา"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "โพรคลอราซ (prochloraz)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "ตัดแต่งทรงพุ่มให้โปร่ง ระบายอากาศได้ดี",
+        "สำรวจแปลงสม่ำเสมอ โดยเฉพาะช่วงฝนชุก"
+      ],
+      "when_to_call_expert": "หากพบแผลลุกลามเร็วหรือใบร่วงเป็นบริเวณกว้าง ควรปรึกษาเจ้าหน้าที่เกษตรก่อนเลือกใช้สาร",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Pink_disease",
+      "slug": "pink-disease",
+      "name_th": "โรคราสีชมพู",
+      "name_en": "Pink disease",
+      "pathogen": "Erythricium salmonicolor",
+      "type": "fungus",
+      "severity": "severe",
+      "affected_parts": ["กิ่ง", "ลำต้น"],
+      "symptoms": [
+        "พบเส้นใยสีขาวบนกิ่ง ต่อมาเปลี่ยนเป็นคราบสีชมพู",
+        "กิ่งที่ถูกทำลายแห้งตาย",
+        "ใบเหลืองและค้างอยู่บนกิ่งไม่ร่วง"
+      ],
+      "causes_conditions": [
+        "เชื้อรา Erythricium salmonicolor เข้าทำลายเปลือกกิ่ง",
+        "ระบาดในสภาพชื้นและทรงพุ่มทึบ"
+      ],
+      "immediate_actions": [
+        "ตัดกิ่งที่เป็นโรคออก แล้วนำไปเผาทำลาย",
+        "ทาหรือพ่นสารกลุ่มคอปเปอร์บริเวณรอยตัดและกิ่งข้างเคียง"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "สารกลุ่มคอปเปอร์ (copper)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "ตัดแต่งทรงพุ่มให้โปร่ง ลดความชื้นสะสมในทรงพุ่ม",
+        "สำรวจกิ่งในทรงพุ่มสม่ำเสมอ โดยเฉพาะหลังฝนตกต่อเนื่อง"
+      ],
+      "when_to_call_expert": "หากพบคราบสีชมพูหลายกิ่งหรือลามเข้าลำต้น ควรให้เจ้าหน้าที่เกษตรประเมินก่อนตัดแต่งใหญ่",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Healthy",
+      "slug": "healthy",
+      "name_th": "ต้นแข็งแรงดี",
+      "name_en": "Healthy",
+      "pathogen": null,
+      "type": "healthy",
+      "severity": "healthy",
+      "affected_parts": [],
+      "symptoms": [
+        "ใบเขียวเป็นมัน ไม่พบแผลหรือจุดผิดปกติ",
+        "ไม่พบคราบเชื้อราหรือรอยทำลายของแมลง"
+      ],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [
+        "ดูแลการระบายน้ำในแปลงไม่ให้มีน้ำขัง",
+        "ตัดแต่งทรงพุ่มให้โปร่ง แสงส่องถึง",
+        "สำรวจสวนสม่ำเสมอเพื่อพบความผิดปกติแต่เนิ่น ๆ"
+      ],
+      "when_to_call_expert": "หากพบความผิดปกติที่ไม่แน่ใจ ถ่ายรูปส่งมาตรวจซ้ำหรือปรึกษาเจ้าหน้าที่เกษตรได้",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+
+    {
+      "class_name": "Canker",
+      "slug": "canker",
+      "name_th": "โรคแคงเกอร์",
+      "name_en": "Canker",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Fruit_rot",
+      "slug": "fruit-rot",
+      "name_th": "โรคผลเน่า",
+      "name_en": "Fruit rot",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Mealybug_infestation",
+      "slug": "mealybug-infestation",
+      "name_th": "เพลี้ยแป้ง",
+      "name_en": "Mealybug infestation",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Sooty_mold",
+      "slug": "sooty-mold",
+      "name_th": "โรคราดำ",
+      "name_en": "Sooty mold",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Stem_blight",
+      "slug": "stem-blight",
+      "name_th": "โรคลำต้นไหม้",
+      "name_en": "Stem blight",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Stem_cracking_gummosis",
+      "slug": "stem-cracking-gummosis",
+      "name_th": "โรคลำต้นแตก-ยางไหล",
+      "name_en": "Stem cracking / gummosis",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Thrips",
+      "slug": "thrips",
+      "name_th": "เพลี้ยไฟ",
+      "name_en": "Thrips",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    },
+    {
+      "class_name": "Yellow_leaf",
+      "slug": "yellow-leaf",
+      "name_th": "อาการใบเหลือง",
+      "name_en": "Yellow leaf",
+      "pathogen": null,
+      "type": null,
+      "severity": "watch",
+      "affected_parts": [],
+      "symptoms": [],
+      "causes_conditions": [],
+      "immediate_actions": [],
+      "chemical_options": [],
+      "prevention": [],
+      "when_to_call_expert": "",
+      "images": [],
+      "references": [],
+      "reviewed_by_expert": false,
+      "pending_expert_input": true
+    }
+  ]
+}

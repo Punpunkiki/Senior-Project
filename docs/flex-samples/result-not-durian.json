@@ -1,0 +1,73 @@
+{
+  "type": "bubble",
+  "size": "mega",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "backgroundColor": "#7A8B2E",
+    "paddingAll": "16px",
+    "spacing": "xs",
+    "contents": [
+      {
+        "type": "text",
+        "text": "ภาพนี้ไม่ใช่ทุเรียนครับ",
+        "size": "xxl",
+        "color": "#FFFFFF",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "sm"
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "paddingAll": "16px",
+    "backgroundColor": "#FFFFFF",
+    "contents": [
+      {
+        "type": "text",
+        "text": "หมอตรวจได้เฉพาะรูปต้นทุเรียนครับ ลองถ่ายใบ กิ่ง ลำต้น หรือผลทุเรียนที่สงสัยแล้วส่งมาใหม่นะครับ",
+        "size": "md",
+        "color": "#1E2A1E",
+        "wrap": true
+      },
+      {
+        "type": "text",
+        "text": "ผลนี้เป็นการประเมินเบื้องต้นจาก AI ควรปรึกษาเจ้าหน้าที่เกษตรก่อนใช้สารเคมี และใช้สารตามอัตราบนฉลากเสมอ",
+        "size": "xs",
+        "color": "#6B7280",
+        "wrap": true,
+        "margin": "lg"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "paddingAll": "12px",
+    "contents": [
+      {
+        "type": "button",
+        "style": "secondary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "text": "ตรวจโรคทุเรียน",
+          "label": "ตรวจรูปใหม่"
+        }
+      },
+      {
+        "type": "button",
+        "style": "secondary",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "text": "ติดต่อเจ้าหน้าที่",
+          "label": "ปรึกษาเจ้าหน้าที่"
+        }
+      }
+    ]
+  }
+}

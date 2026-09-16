@@ -43,6 +43,9 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./durian_bot.db"
     upload_dir: str = "./uploads"
     image_retention_days: int = 30
+    # LINE itself caps image messages at 10 MB; this is our own guard so a
+    # huge upload cannot exhaust memory during preprocessing.
+    max_image_mb: float = 10.0
 
     # --- Public URLs (fill in once deployed; see line-assets/HANDOFF.md) ---
     base_url: str = "http://localhost:8000"

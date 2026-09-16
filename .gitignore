@@ -17,6 +17,11 @@ __pycache__/
 venv/
 .env
 
+# LINE OA service runtime state (farmer photos + local DB -- never committed)
+/uploads/
+*.db
+*.sqlite3
+
 # os / editor
 .DS_Store
 *.swp
