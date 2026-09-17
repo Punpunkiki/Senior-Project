@@ -216,6 +216,53 @@ interpret:
   occlusion_patch: 32
 
 # ----------------------------------------------------------------------------
+# ACTIONS -- what the pipeline DOES about what it finds.  [DL-ACTIONS]
+#
+# Every earlier stage measured things and stopped (EDA logged an imbalance
+# ratio; the pHash audit counted leaked duplicates and said "disclose this").
+# These rules turn each finding into an applied, audited change, written to
+# outputs/actions.json with before/after counts.
+#
+# Set enabled: false to reproduce the un-remediated baseline run -- the
+# comparison between the two is itself a result worth reporting.
+# ----------------------------------------------------------------------------
+actions:
+  enabled: true
+  report_path: ./outputs/actions.json
+
+  data_quality:
+    drop_corrupt: true          # unreadable files never reach the loader
+    drop_small_images: true
+    min_side_px: 64             # below this, a 224px resize is mostly invention
+
+  duplicates:
+    # Order of application: leakage -> contradictions -> redundancy.
+    fix_cross_split_leakage: true       # drop the TRAIN copy, keep val/test whole
+    quarantine_cross_class_dupes: true  # same image, two labels = label noise
+    collapse_near_dupes_in_train: true  # keep one representative per group
+
+  imbalance:
+    # Replaces the old `train.loss.class_weights: null  # set by Phase 11`,
+    # which relied on a human noticing and editing the config by hand.
+    auto_class_weights: true
+    trigger_ratio: 1.50         # act only when max/min class count exceeds this
+    method: effective_number    # effective_number (Cui et al. 2019) | inverse_frequency
+    beta: 0.999                 # effective-number beta; higher = stronger re-weighting
+    max_weight: 10.0            # clip so one rare class cannot dominate the loss
+
+  evaluation:
+    report_confused_pairs: true
+    top_k_confused_pairs: 5
+    min_confusion_rate: 0.05    # name a pair once >=5% of a class lands on it
+
+  interpret:
+    # The project's central question as a rule. The occlusion test reports
+    # cam_over_random_ratio = (drop when occluding the CAM peak) / (drop when
+    # occluding a random patch). At ~1.0 the highlighted region is no more
+    # load-bearing than background, which is the artifact signature.
+    min_cam_over_random_ratio: 1.50
+
+# ----------------------------------------------------------------------------
 # CPU / quick smoke-test mode (subset + few epochs) so the code is runnable
 # without a GPU or the full dataset.  Enable with: --smoke   (see train.py)
 # ----------------------------------------------------------------------------

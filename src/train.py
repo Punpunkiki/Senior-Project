@@ -12,6 +12,7 @@ Decision Logs implemented here: [DL-PRETRAIN] [DL-FINETUNE] [DL-LOSS]
 from __future__ import annotations
 
 import argparse
+import json
 import math
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -122,17 +123,67 @@ def prepare_dataframe(cfg: Dict[str, Any], seed: int):
                 rep, _ = audit_split_leakage(cfg, df)
                 save_json(rep, str(audit_path))
         _save(df, cfg["paths"]["splits_file"])  # save_splits adds group if missing
-        return df
+        return _remediate(cfg, df)
 
     splits_file = cfg["paths"]["splits_file"]
     if Path(splits_file).exists():
         log.info("Reusing existing splits: %s", splits_file)
-        return load_splits(splits_file)
+        return _remediate(cfg, load_splits(splits_file))
     df = discover_images(cfg)
     df = assign_groups(cfg, df)
     df = make_splits(cfg, df, seed)
     save_splits(df, splits_file)
-    return df
+    return _remediate(cfg, df)
+
+
+def _remediate(cfg: Dict[str, Any], df):
+    """Apply the [DL-ACTIONS] remediation rules, so findings from EDA/audits
+    actually change the data that training sees."""
+    from .actions import remediate_dataframe
+    return remediate_dataframe(cfg, df)
+
+
+def resolve_class_weights(cfg: Dict[str, Any], df) -> Optional[List[float]]:
+    """Decide the loss's class weights.
+
+    An explicit `train.loss.class_weights` list in config always wins (manual
+    override). Otherwise the imbalance rule measures the TRAIN split and
+    computes weights itself — this replaces the old behaviour, where the
+    config said `null  # set by Phase 11` and nothing ever set it ([DL-ACTIONS]).
+    """
+    explicit = cfg["train"]["loss"].get("class_weights")
+    if explicit is not None:
+        log.info("Using class weights from config (manual override).")
+        return explicit
+    if not cfg.get("actions", {}).get("enabled", False):
+        return None
+
+    from .actions import ActionLog, compute_class_weights
+    train_df = df[df["split"] == "train"] if "split" in df.columns else df
+    alog = ActionLog()
+    weights = compute_class_weights(cfg, train_df, alog)
+    _append_actions(cfg, alog)
+    return weights
+
+
+def _append_actions(cfg: Dict[str, Any], alog) -> None:
+    """Merge newly-recorded actions into the run's audit trail on disk."""
+    from dataclasses import asdict
+
+    from .utils import save_json
+    path = Path(cfg["actions"]["report_path"])
+    existing = {"actions": []}
+    if path.exists():
+        try:
+            with open(path, encoding="utf-8") as f:
+                existing = json.load(f)
+        except Exception:
+            pass
+    existing.setdefault("actions", []).extend(asdict(a) for a in alog.actions)
+    existing["n_rules_evaluated"] = len(existing["actions"])
+    existing["n_actions_taken"] = sum(
+        1 for a in existing["actions"] if a.get("triggered"))
+    save_json(existing, path)
 
 
 # --------------------------------------------------------------------------- #
@@ -205,7 +256,7 @@ def train_one(cfg: Dict[str, Any], name: str, df, device, smoke: bool = False,
 
     optimizer = build_optimizer(cfg, model, name)
     scheduler = build_scheduler(cfg, optimizer, epochs)
-    criterion = build_loss(cfg, cfg["train"]["loss"]["class_weights"])
+    criterion = build_loss(cfg, resolve_class_weights(cfg, df))
 
     # --- optional Mixup/CutMix ([DL-AUG-OFF] by default) ---
     mixup_fn = None

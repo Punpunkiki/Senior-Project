@@ -151,6 +151,24 @@ def run_eda(cfg) -> Dict[str, Any]:
         "brightness_norm": brightness_and_norm(df, classes, out_dir),
         "duplicates": duplicate_report(cfg, df, out_dir),
     }
+
+    # [DL-ACTIONS] EDA used to stop here, at "we measured this". Run the
+    # remediation rules against the findings so the run ends with an applied,
+    # audited action list instead of numbers nobody acts on.
+    if cfg.get("actions", {}).get("enabled", False):
+        from .actions import (ActionLog, apply_data_actions,
+                              compute_class_weights)
+        from .data import assign_groups
+        grouped = df if "group" in df.columns else assign_groups(cfg, df)
+        cleaned, alog = apply_data_actions(cfg, grouped)
+        train_df = (cleaned[cleaned["split"] == "train"]
+                    if "split" in cleaned.columns else cleaned)
+        compute_class_weights(cfg, train_df, alog)
+        alog.save(cfg["actions"]["report_path"])
+        (out_dir / "actions.md").write_text(alog.to_markdown(), encoding="utf-8")
+        summary["actions"] = alog.to_dict()
+        summary["images_after_remediation"] = int(len(cleaned))
+
     save_json(summary, out_dir / "eda_summary.json")
     log.info("EDA complete -> %s", out_dir)
     return summary

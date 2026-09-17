@@ -92,6 +92,31 @@ trade-off; only worth it if OOD macro-F1 rises materially]]`.
 | `[[e.g. targeted aug for Sooty/Mealybug]]` | val macro-F1 | `[[ ]]` | `[[ ]]` |
 | `[[e.g. TTA flip]]` | test macro-F1 | `[[ ]]` | `[[ ]]` |
 
+## 7b. Remediation actions taken ([DL-ACTIONS])
+Findings do not stop at "we measured this" — each one triggers an applied,
+audited change. Paste the generated table from `outputs/eda/actions.md`
+(machine-readable: `outputs/actions.json`):
+
+| Stage | Finding | Fired | Action taken | Before → After |
+|---|---|---|---|---|
+| `[[paste from outputs/eda/actions.md]]` | | | | |
+
+Totals: `[[n_rules_evaluated]]` rules evaluated, `[[n_actions_taken]]` fired;
+dataset `[[n_before]]` → `[[n_after]]` images.
+
+**Leakage/duplication cost (report this).** Re-run once with
+`actions.enabled: false` and compare — the gap is how much of the headline
+score came from leaked or duplicated data, which is a result in its own right:
+
+| Run | test accuracy | test macro-F1 | notes |
+|---|---|---|---|
+| Un-remediated (`actions.enabled: false`) | `[[ ]]` | `[[ ]]` | contains known cross-split duplicates |
+| Remediated (default) | `[[ ]]` | `[[ ]]` | leaked train copies dropped |
+| **Difference** | `[[ ]]` | `[[ ]]` | ← the inflation |
+
+Class weights actually applied (if the imbalance rule fired):
+`[[weights from outputs/actions.json]]`.
+
 ## 8. Limitations (honest)
 - **Small, single-orchard dataset** (~5k, one farm in Vinh Long) → limited
   background/cultivar/lighting diversity; high artifact-shortcut risk.

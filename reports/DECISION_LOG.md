@@ -384,8 +384,63 @@ are mirrored as comments in `config.yaml` and `src/*.py`.
 ## Phase 11 — Iterative improvement (planned interventions)
 Each intervention targets a *specific observed error*, not blind tuning:
 - Worst confused pair (expected Sooty mold↔Mealybug) → targeted aug / hard-example
-  mining for those classes.
-- Mild class weighting **only if** EDA confirms imbalance.
+  mining for those classes. **Now named automatically** by
+  `actions.report_confused_pairs` ([DL-ACTIONS]).
+- Mild class weighting **only if** EDA confirms imbalance. **Now applied
+  automatically** by `actions.compute_class_weights` ([DL-ACTIONS]).
 - Test-time augmentation (flip) if it improves val macro-F1 without hurting
-  calibration.
+  calibration. *(Still manual: `eval.tta.enabled`.)*
 Before/after macro-F1 and confusion sub-matrix reported in `RESULTS.md`.
+
+---
+
+### [DL-ACTIONS] Findings must produce actions, not footnotes
+- **Decision:** Add `src/actions.py`, a remediation layer that converts each
+  measured finding into an **applied, audited change**, driven by thresholds in
+  `config.yaml -> actions:`. Every rule writes an `Action` record (finding,
+  rule, fired?, action taken, before→after counts, severity) to
+  `outputs/actions.json`, rendered as a markdown table for the thesis. Rules:
+
+  | Stage | Finding | Action |
+  |---|---|---|
+  | eda | unreadable/corrupt file | drop from manifest |
+  | eda | image below `min_side_px` | drop (a 224px resize would be invention) |
+  | eda | near-dup group spans Train/Val/Test | drop the **train** copy ([DL-LEAKFIX]) |
+  | eda | near-dup group carries 2+ labels | quarantine from train; count in val/test as an irreducible-error floor |
+  | eda | near-dups inside train | collapse to one representative |
+  | train | class imbalance > `trigger_ratio` | compute + inject class weights |
+  | evaluate | pair confused above `min_confusion_rate` | name the pair as a data-collection target |
+  | interpret | occlusion `cam_over_random_ratio` below minimum | flag ARTIFACT RISK + prescribe the cropped-PNG ablation |
+
+- **Why:** The pipeline previously *measured and stopped*. EDA computed a
+  class-imbalance ratio and logged it; `data.py` logged `max/min class ratio`;
+  the pHash audit counted cross-split duplicates and advised "disclose this
+  number"; and `config.yaml` carried `class_weights: null  # set by Phase 11`
+  — a hand-written TODO that nothing enforced. A finding nothing acts on is a
+  footnote, and it silently depends on a human noticing at the right moment.
+- **Alternatives:** (a) keep everything manual and document it in the thesis;
+  (b) auto-fix silently with no audit trail; (c) recommend-only, never apply.
+- **Why not:** (a) is what produced the gap — the remediation step simply never
+  happens under time pressure, and the thesis then reports metrics computed on
+  known-leaky data. (b) is unacceptable for research: a reader cannot tell what
+  the numbers were computed on. (c) leaves the same "someone must notice"
+  failure mode. The chosen design applies the fix **and** prints exactly what it
+  did and why, so the result stays reproducible and arguable.
+- **Reproducing the un-remediated baseline:** set `actions.enabled: false`. The
+  difference between the two runs is itself a reportable result — it quantifies
+  how much of the headline score came from leakage and duplication.
+
+### [DL-LEAKFIX] Which copy to drop when a duplicate spans splits
+- **Decision:** When a near-duplicate group spans Train and Val/Test, drop the
+  **Train** copy and leave the evaluation copy in place.
+- **Why:** The leakage inflates the score because the model memorised the
+  training copy; removing that copy removes the inflation. Removing the test
+  copy instead would shrink and silently redefine the benchmark, making runs
+  incomparable across config changes.
+- **Alternatives:** drop the test copy; drop both; re-split from scratch.
+- **Why not:** dropping the test copy changes the measuring stick mid-study;
+  dropping both loses usable evidence; re-splitting discards the dataset's own
+  predefined split, which the proposal commits to honouring ([DL-PRESPLIT]).
+- **Caveat to disclose:** this cannot fix leakage the pHash threshold
+  (`split.group.near_dup_hamming`) fails to detect. Report the audit counts
+  alongside the remediated metrics.

@@ -104,6 +104,16 @@ def run_interpret(cfg, name, device, df, pretrained_fallback=False) -> Dict[str,
         summary["cam_over_random_ratio"] = (
             summary["occlusion_mean_drop_cam_region"] /
             max(summary["occlusion_mean_drop_random_region"], 1e-6))
+    # [DL-ACTIONS] the central research question as an enforced rule, not a
+    # number someone has to notice.
+    if cfg.get("actions", {}).get("enabled", False):
+        from .actions import ActionLog, assess_artifact_risk
+        from .train import _append_actions
+        alog = ActionLog()
+        summary["artifact_risk"] = assess_artifact_risk(
+            cfg, summary.get("cam_over_random_ratio"), alog)
+        _append_actions(cfg, alog)
+
     save_json(summary, Path(cfg["paths"]["outputs_dir"]) / name / "occlusion_summary.json")
     log.info("[%s] Grad-CAM saved (%d images). Occlusion summary: %s",
              name, sum(seen.values()), summary.get("cam_over_random_ratio"))

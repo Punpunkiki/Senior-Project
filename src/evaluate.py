@@ -252,9 +252,17 @@ def evaluate_model(cfg, name, device, df, with_ood: bool = False,
     metrics["ece_scaled"] = expected_calibration_error(
         test_probs, test_y, cfg["eval"]["calibration_bins"])
 
-    plot_confusion_matrix(test_y, test_pred, classes,
-                          out_dir / "confusion_matrix.png",
-                          f"{name}: in-distribution test")
+    cm = plot_confusion_matrix(test_y, test_pred, classes,
+                               out_dir / "confusion_matrix.png",
+                               f"{name}: in-distribution test")
+    # [DL-ACTIONS] name the specific pairs that hurt, so the next data round
+    # is targeted rather than "collect more images".
+    if cfg.get("actions", {}).get("enabled", False):
+        from .actions import ActionLog, report_confused_pairs
+        from .train import _append_actions
+        alog = ActionLog()
+        metrics["confused_pairs"] = report_confused_pairs(cfg, cm, classes, alog)
+        _append_actions(cfg, alog)
     reliability_diagram(test_probs, test_y, cfg["eval"]["calibration_bins"],
                         out_dir / "reliability.png", f"{name}: reliability (T={T:.2f})")
 
