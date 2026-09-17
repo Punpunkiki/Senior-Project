@@ -25,3 +25,10 @@ venv/
 # os / editor
 .DS_Store
 *.swp
+
+# web front-end build artifacts
+/web/node_modules/
+/web/.next/
+/web/out/
+/web/next-env.d.ts
+.env.local

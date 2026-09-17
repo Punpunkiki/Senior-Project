@@ -14,13 +14,16 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 from dataclasses import asdict
+from pathlib import Path
 from typing import Any, Dict, List
 
-from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request
+from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from linebot.v3.exceptions import InvalidSignatureError
 from linebot.v3.webhook import WebhookParser
 
+from app.auth import bearer_token, verify_id_token
 from app.config import settings
 from app.db import get_diagnosis, get_session, init_db
 from app.knowledge import load_knowledge_base
@@ -55,6 +58,10 @@ async def lifespan(app: FastAPI):
         log.error("MODEL NOT LOADED -- the bot will reply 'ระบบยังไม่พร้อม' "
                   "to every photo until outputs/%s/best.pt exists",
                   settings.model_name)
+    if not settings.liff_channel_id:
+        log.warning("LIFF_CHANNEL_ID is not set -- /api/diagnoses/{id} cannot "
+                    "verify who is asking, so anyone holding a result link can "
+                    "read it. Set it before serving real users.")
 
     _parser = WebhookParser(settings.line_channel_secret)
     _service = LineService(settings, predictor, kb, get_state_store())
@@ -125,11 +132,33 @@ def get_disease(slug: str) -> Dict[str, Any]:
 
 
 @app.get("/api/diagnoses/{diagnosis_id}")
-def read_diagnosis(diagnosis_id: str) -> Dict[str, Any]:
+def read_diagnosis(diagnosis_id: str,
+                   authorization: str | None = Header(default=None)
+                   ) -> Dict[str, Any]:
+    """A diagnosis is readable only by the LINE user who created it.
+
+    The LIFF page sends that user's ID token; we ask LINE who it belongs to and
+    compare. Without `liff_channel_id` configured the check cannot run -- the
+    service warns loudly at startup in that case.
+    """
     with get_session() as session:
         record = get_diagnosis(session, diagnosis_id)
         if record is None:
             raise HTTPException(status_code=404, detail="diagnosis not found")
+
+        if settings.liff_channel_id:
+            token = bearer_token(authorization)
+            if not token:
+                raise HTTPException(status_code=401,
+                                    detail="LINE ID token required")
+            viewer = verify_id_token(token, settings.liff_channel_id)
+            if viewer is None:
+                raise HTTPException(status_code=401, detail="invalid ID token")
+            if viewer != record.line_user_id:
+                log.warning("blocked cross-user read of diagnosis %s",
+                            diagnosis_id)
+                raise HTTPException(status_code=403, detail="not your diagnosis")
+
         payload = record.to_public_dict()
 
     kb = load_knowledge_base()
@@ -137,3 +166,16 @@ def read_diagnosis(diagnosis_id: str) -> Dict[str, Any]:
     disease = kb.by_class(top1) if top1 else None
     payload["disease"] = asdict(disease) if disease else None
     return payload
+
+
+# --------------------------------------------------------------------------- #
+# Static site (must be mounted LAST so it cannot shadow /api or /webhook).
+# `npm run build` in web/ produces web/out; serving it from this same origin
+# means the LIFF page needs no CORS configuration and there is one deployment.
+# --------------------------------------------------------------------------- #
+_WEB_DIR = Path(__file__).resolve().parent.parent / "web" / "out"
+if _WEB_DIR.is_dir():
+    app.mount("/", StaticFiles(directory=_WEB_DIR, html=True), name="web")
+else:
+    log.warning("No static site at %s -- API only. Run `npm run build` in web/ "
+                "to generate it.", _WEB_DIR)

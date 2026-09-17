@@ -23,6 +23,10 @@ class Settings(BaseSettings):
 
     # --- LIFF -----------------------------------------------------------------
     liff_id: str = ""
+    # Channel ID of the LIFF app's provider channel. Required to verify that
+    # the viewer of a result page is the farmer who sent the photo; when it is
+    # empty the ownership check cannot run (see app/auth.py).
+    liff_channel_id: str = ""
 
     # --- Model serving ----------------------------------------------------
     # Points at the training pipeline's own config.yaml -- classes, image

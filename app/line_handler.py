@@ -244,10 +244,13 @@ class LineService:
             return None
 
     def _detail_url(self, diagnosis_id: str) -> str:
+        """LIFF forwards its query string to the endpoint, so both forms land
+        on the same static /result page with ?dg=<id>."""
         if self.settings.liff_id:
             return (f"https://liff.line.me/{self.settings.liff_id}"
                     f"?dg={diagnosis_id}")
-        return f"{self.settings.web_base_url.rstrip('/')}/result/{diagnosis_id}"
+        return (f"{self.settings.web_base_url.rstrip('/')}"
+                f"/result/?dg={diagnosis_id}")
 
     def _build_result(self, diagnosis, diagnosis_id: str) -> OutgoingFlex:
         detail_url = self._detail_url(diagnosis_id)

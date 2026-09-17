@@ -1,0 +1,388 @@
+/* ==========================================================================
+   หมอทุเรียน — corporate identity as design tokens.
+
+   These values are the CSS mirror of app/flex/tokens.py, which the LINE Flex
+   messages use. A colour changes in both places or in neither, so the chat
+   card and the website never drift apart.
+
+   Audience note: farmers, often older, on small phones in bright sunlight.
+   Body text never goes below 18px, tap targets never below 48px, and every
+   foreground/background pair clears WCAG AA.
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --leaf-700: #1f5f3a;
+  --leaf-500: #2e8b57;
+  --leaf-100: #e6f4ea;
+  --durian-500: #f2b705;
+  --durian-300: #ffd95a;
+  --cream-50: #fffbea;
+  --husk-600: #7a8b2e;
+  --warn-500: #e8871e;
+  --danger-600: #c0392b;
+  --ink-900: #1e2a1e;
+
+  /* Neutrals */
+  --grey-600: #6b7280;
+  --grey-300: #d1d5db;
+  --white: #ffffff;
+
+  /* Type scale — body floor is 18px by design */
+  --text-body: 18px;
+  --text-lead: 20px;
+  --text-h3: 22px;
+  --text-h2: 26px;
+  --text-h1: 32px;
+  --text-caption: 15px;
+
+  --radius: 16px;
+  --tap-min: 48px;
+  --maxw: 760px;
+
+  --font-head: "Kanit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Sarabun", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--cream-50);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--leaf-700);
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+
+p { margin: 0 0 1em; }
+
+a { color: var(--leaf-700); }
+
+/* Visible focus for keyboard users — never removed. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--durian-500);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- Durian-thorn pattern: a faint geometric motif, drawn in CSS so it
+   costs no image request on a 3G connection. --------------------------- */
+.thorn-bg {
+  background-color: var(--leaf-100);
+  background-image:
+    linear-gradient(135deg, rgba(122, 139, 46, 0.14) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(122, 139, 46, 0.14) 25%, transparent 25%);
+  background-size: 22px 22px;
+}
+
+/* --- Header / nav ------------------------------------------------------ */
+.site-header {
+  background: var(--leaf-700);
+  color: var(--white);
+  padding: 14px 0;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  text-decoration: none;
+  font-family: var(--font-head);
+  font-size: var(--text-h3);
+  font-weight: 600;
+}
+
+.site-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: var(--text-caption);
+  padding: 10px 12px;
+  border-radius: 10px;
+  min-height: var(--tap-min);
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-nav a:hover { background: rgba(255, 255, 255, 0.16); }
+
+/* --- Buttons ----------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--tap-min);
+  padding: 12px 22px;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  font-family: var(--font-head);
+  font-size: var(--text-body);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-primary { background: var(--leaf-700); color: var(--white); }
+.btn-primary:hover { background: #17482c; }
+
+.btn-accent { background: var(--durian-500); color: var(--ink-900); }
+.btn-accent:hover { background: #d9a504; }
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--leaf-700);
+  border-color: var(--leaf-700);
+}
+
+/* --- Cards ------------------------------------------------------------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--grey-300);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 620px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.card h3 { margin-bottom: 6px; }
+
+.card-sub {
+  color: var(--grey-600);
+  font-size: var(--text-caption);
+  margin-bottom: 10px;
+}
+
+/* --- Badges ------------------------------------------------------------ */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--white);
+}
+
+.badge-healthy  { background: var(--leaf-500); }
+.badge-watch    { background: var(--durian-500); color: var(--ink-900); }
+.badge-moderate { background: var(--warn-500); }
+.badge-severe   { background: var(--danger-600); }
+.badge-pending  { background: var(--grey-600); }
+
+.badge-reviewed {
+  background: var(--leaf-100);
+  color: var(--leaf-700);
+  border: 1px solid var(--leaf-500);
+}
+
+/* --- Hero -------------------------------------------------------------- */
+.hero {
+  padding: 40px 0 32px;
+  text-align: center;
+}
+
+.hero h1 { margin-bottom: 12px; }
+
+.hero .lead {
+  font-size: var(--text-lead);
+  max-width: 34ch;
+  margin: 0 auto 24px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --- Steps ------------------------------------------------------------- */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 50%;
+  background: var(--durian-500);
+  color: var(--ink-900);
+  font-family: var(--font-head);
+  font-weight: 600;
+}
+
+.step { display: flex; gap: 14px; align-items: flex-start; }
+
+/* --- Sections ---------------------------------------------------------- */
+section { padding: 28px 0; }
+
+.section-alt { background: var(--leaf-100); }
+
+/* --- Search / filter --------------------------------------------------- */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filter-bar input {
+  flex: 1 1 220px;
+  min-height: var(--tap-min);
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  border: 2px solid var(--grey-300);
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--ink-900);
+}
+
+.chip {
+  min-height: var(--tap-min);
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--leaf-700);
+  background: var(--white);
+  color: var(--leaf-700);
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--leaf-700);
+  color: var(--white);
+}
+
+/* --- Confidence bar ---------------------------------------------------- */
+.conf-track {
+  height: 14px;
+  border-radius: 7px;
+  background: var(--grey-300);
+  overflow: hidden;
+}
+
+.conf-fill { height: 100%; border-radius: 7px; }
+
+/* --- Notices ----------------------------------------------------------- */
+.notice {
+  border-left: 6px solid var(--durian-500);
+  background: #fff8e1;
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.notice-danger {
+  border-left-color: var(--danger-600);
+  background: #fdeceb;
+}
+
+.disclaimer {
+  font-size: var(--text-caption);
+  color: var(--grey-600);
+}
+
+/* --- Lists ------------------------------------------------------------- */
+.tick-list { list-style: none; padding: 0; margin: 0 0 1em; }
+
+.tick-list li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 10px;
+}
+
+.tick-list li::before {
+  content: "•";
+  position: absolute;
+  left: 8px;
+  color: var(--husk-600);
+  font-weight: 700;
+}
+
+/* --- Footer ------------------------------------------------------------ */
+.site-footer {
+  background: var(--leaf-700);
+  color: var(--white);
+  padding: 24px 0;
+  margin-top: 32px;
+  font-size: var(--text-caption);
+}
+
+.site-footer a { color: var(--durian-300); }
+
+/* --- Utilities --------------------------------------------------------- */
+.muted { color: var(--grey-600); }
+.center { text-align: center; }
+.stack > * + * { margin-top: 12px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
