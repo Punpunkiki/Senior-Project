@@ -49,8 +49,9 @@ export const TYPE_LABEL_TH: Record<string, string> = {
   oomycete: "ราน้ำ",
   algae: "สาหร่าย",
   insect: "แมลง",
+  disorder: "อาการผิดปกติ (ไม่ใช่เชื้อโรค)",
   healthy: "ปกติ",
 };
 
 /** Groups used by the /diseases filter chips. */
-export const PART_FILTERS = ["ใบ", "กิ่ง", "ลำต้น", "ราก", "ผล"];
+export const PART_FILTERS = ["ใบ", "ดอก", "กิ่ง", "ลำต้น", "ราก", "ผล"];

@@ -30,7 +30,7 @@
       },
       {
         "type": "text",
-        "text": "โรคแคงเกอร์",
+        "text": "โรคตัวอย่างที่ยังไม่มีข้อมูล",
         "size": "xxl",
         "color": "#FFFFFF",
         "wrap": true,
@@ -39,7 +39,7 @@
       },
       {
         "type": "text",
-        "text": "Canker",
+        "text": "Example pending entry",
         "size": "sm",
         "color": "#FFFFFFCC",
         "wrap": true

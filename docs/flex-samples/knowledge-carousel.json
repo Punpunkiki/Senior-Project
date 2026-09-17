@@ -75,6 +75,192 @@
         "contents": [
           {
             "type": "text",
+            "text": "โรคโคนเน่า (แผลเน่าที่ลำต้น)",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "Patch canker / Stem canker",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "มีรอยคราบน้ำสีน้ำตาลแดงไหลออกจากเปลือกลำต้นหรือโคนต้นครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/canker",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#C0392B",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "โรคผลเน่า",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "Fruit rot",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เริ่มจากจุดแผลเล็ก ๆ สีน้ำตาลดำบนผิวผลครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/fruit-rot",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#E8871E",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เพลี้ยแป้ง",
+            "size": "xxl",
+            "color": "#FFFFFF",
+            "wrap": true,
+            "weight": "bold",
+            "margin": "sm"
+          },
+          {
+            "type": "text",
+            "text": "Mealybug infestation",
+            "size": "sm",
+            "color": "#FFFFFFCC",
+            "wrap": true
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "16px",
+        "backgroundColor": "#FFFFFF",
+        "contents": [
+          {
+            "type": "text",
+            "text": "เห็นตัวแมลงสีขาวคล้ายผงแป้งเกาะเป็นกลุ่มตามร่องหนามและขั้วผลครับ",
+            "size": "md",
+            "color": "#1E2A1E",
+            "wrap": true
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "paddingAll": "12px",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "height": "sm",
+            "action": {
+              "type": "uri",
+              "uri": "https://example.org/diseases/mealybug-infestation",
+              "label": "อ่านรายละเอียด"
+            },
+            "color": "#1F5F3A"
+          }
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "backgroundColor": "#C0392B",
+        "paddingAll": "16px",
+        "spacing": "xs",
+        "contents": [
+          {
+            "type": "text",
             "text": "โรคราสีชมพู",
             "size": "xxl",
             "color": "#FFFFFF",
@@ -137,192 +323,6 @@
         "contents": [
           {
             "type": "text",
-            "text": "โรคแคงเกอร์",
-            "size": "xxl",
-            "color": "#FFFFFF",
-            "wrap": true,
-            "weight": "bold",
-            "margin": "sm"
-          },
-          {
-            "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
-            "size": "sm",
-            "color": "#FFFFFFCC",
-            "wrap": true
-          }
-        ]
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "paddingAll": "16px",
-        "backgroundColor": "#FFFFFF",
-        "contents": [
-          {
-            "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
-            "size": "md",
-            "color": "#1E2A1E",
-            "wrap": true
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "paddingAll": "12px",
-        "contents": [
-          {
-            "type": "button",
-            "style": "primary",
-            "height": "sm",
-            "action": {
-              "type": "uri",
-              "uri": "https://example.org/diseases/canker",
-              "label": "อ่านรายละเอียด"
-            },
-            "color": "#1F5F3A"
-          }
-        ]
-      }
-    },
-    {
-      "type": "bubble",
-      "size": "kilo",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "backgroundColor": "#F2B705",
-        "paddingAll": "16px",
-        "spacing": "xs",
-        "contents": [
-          {
-            "type": "text",
-            "text": "โรคผลเน่า",
-            "size": "xxl",
-            "color": "#FFFFFF",
-            "wrap": true,
-            "weight": "bold",
-            "margin": "sm"
-          },
-          {
-            "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
-            "size": "sm",
-            "color": "#FFFFFFCC",
-            "wrap": true
-          }
-        ]
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "paddingAll": "16px",
-        "backgroundColor": "#FFFFFF",
-        "contents": [
-          {
-            "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
-            "size": "md",
-            "color": "#1E2A1E",
-            "wrap": true
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "paddingAll": "12px",
-        "contents": [
-          {
-            "type": "button",
-            "style": "primary",
-            "height": "sm",
-            "action": {
-              "type": "uri",
-              "uri": "https://example.org/diseases/fruit-rot",
-              "label": "อ่านรายละเอียด"
-            },
-            "color": "#1F5F3A"
-          }
-        ]
-      }
-    },
-    {
-      "type": "bubble",
-      "size": "kilo",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "backgroundColor": "#F2B705",
-        "paddingAll": "16px",
-        "spacing": "xs",
-        "contents": [
-          {
-            "type": "text",
-            "text": "เพลี้ยแป้ง",
-            "size": "xxl",
-            "color": "#FFFFFF",
-            "wrap": true,
-            "weight": "bold",
-            "margin": "sm"
-          },
-          {
-            "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
-            "size": "sm",
-            "color": "#FFFFFFCC",
-            "wrap": true
-          }
-        ]
-      },
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "paddingAll": "16px",
-        "backgroundColor": "#FFFFFF",
-        "contents": [
-          {
-            "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
-            "size": "md",
-            "color": "#1E2A1E",
-            "wrap": true
-          }
-        ]
-      },
-      "footer": {
-        "type": "box",
-        "layout": "vertical",
-        "paddingAll": "12px",
-        "contents": [
-          {
-            "type": "button",
-            "style": "primary",
-            "height": "sm",
-            "action": {
-              "type": "uri",
-              "uri": "https://example.org/diseases/mealybug-infestation",
-              "label": "อ่านรายละเอียด"
-            },
-            "color": "#1F5F3A"
-          }
-        ]
-      }
-    },
-    {
-      "type": "bubble",
-      "size": "kilo",
-      "header": {
-        "type": "box",
-        "layout": "vertical",
-        "backgroundColor": "#F2B705",
-        "paddingAll": "16px",
-        "spacing": "xs",
-        "contents": [
-          {
-            "type": "text",
             "text": "โรคราดำ",
             "size": "xxl",
             "color": "#FFFFFF",
@@ -332,7 +332,7 @@
           },
           {
             "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
+            "text": "Sooty mold",
             "size": "sm",
             "color": "#FFFFFFCC",
             "wrap": true
@@ -347,7 +347,7 @@
         "contents": [
           {
             "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "text": "มีคราบเขม่าดำคล้ายเขม่าไฟ เกาะอยู่บนผิวใบและผิวผลครับ",
             "size": "md",
             "color": "#1E2A1E",
             "wrap": true
@@ -379,13 +379,13 @@
       "header": {
         "type": "box",
         "layout": "vertical",
-        "backgroundColor": "#F2B705",
+        "backgroundColor": "#C0392B",
         "paddingAll": "16px",
         "spacing": "xs",
         "contents": [
           {
             "type": "text",
-            "text": "โรคลำต้นไหม้",
+            "text": "โรคกิ่งแห้ง",
             "size": "xxl",
             "color": "#FFFFFF",
             "wrap": true,
@@ -394,7 +394,7 @@
           },
           {
             "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
+            "text": "Stem blight / branch dieback",
             "size": "sm",
             "color": "#FFFFFFCC",
             "wrap": true
@@ -409,7 +409,7 @@
         "contents": [
           {
             "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "text": "กิ่งแห้งตายเป็นกิ่ง ๆ ทั้งที่กิ่งข้าง ๆ ยังเขียวดีครับ",
             "size": "md",
             "color": "#1E2A1E",
             "wrap": true
@@ -441,13 +441,13 @@
       "header": {
         "type": "box",
         "layout": "vertical",
-        "backgroundColor": "#F2B705",
+        "backgroundColor": "#C0392B",
         "paddingAll": "16px",
         "spacing": "xs",
         "contents": [
           {
             "type": "text",
-            "text": "โรคลำต้นแตก-ยางไหล",
+            "text": "โรคยางไหล (ลำต้นแตก มียางไหล)",
             "size": "xxl",
             "color": "#FFFFFF",
             "wrap": true,
@@ -456,7 +456,7 @@
           },
           {
             "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
+            "text": "Stem cracking and gummosis",
             "size": "sm",
             "color": "#FFFFFFCC",
             "wrap": true
@@ -471,7 +471,7 @@
         "contents": [
           {
             "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "text": "เปลือกลำต้นแตกเป็นรอยยาว มียางหรือน้ำเหนียวสีน้ำตาลไหลซึมออกมาครับ",
             "size": "md",
             "color": "#1E2A1E",
             "wrap": true
@@ -503,13 +503,13 @@
       "header": {
         "type": "box",
         "layout": "vertical",
-        "backgroundColor": "#F2B705",
+        "backgroundColor": "#E8871E",
         "paddingAll": "16px",
         "spacing": "xs",
         "contents": [
           {
             "type": "text",
-            "text": "เพลี้ยไฟ",
+            "text": "เพลี้ยไฟ (เพลี้ยไฟพริก)",
             "size": "xxl",
             "color": "#FFFFFF",
             "wrap": true,
@@ -518,7 +518,7 @@
           },
           {
             "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
+            "text": "Thrips (chilli thrips)",
             "size": "sm",
             "color": "#FFFFFFCC",
             "wrap": true
@@ -533,7 +533,7 @@
         "contents": [
           {
             "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "text": "ใบอ่อนหงิกงอ ม้วน แคระแกร็น ดูแห้งกร้านเหมือนโดนแดดเผาครับ",
             "size": "md",
             "color": "#1E2A1E",
             "wrap": true
@@ -580,7 +580,7 @@
           },
           {
             "type": "text",
-            "text": "ข้อมูลกำลังจัดทำ",
+            "text": "Yellow leaf (symptom, not a disease)",
             "size": "sm",
             "color": "#FFFFFFCC",
             "wrap": true
@@ -595,7 +595,7 @@
         "contents": [
           {
             "type": "text",
-            "text": "ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ",
+            "text": "ใบเปลี่ยนเป็นสีเหลืองซีด อาจเหลืองทั้งใบหรือเหลืองระหว่างเส้นใบครับ",
             "size": "md",
             "color": "#1E2A1E",
             "wrap": true

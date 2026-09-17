@@ -1,8 +1,11 @@
 {
   "_meta": {
-    "note": "Keys in 'class_name' MUST match config.yaml -> data.classes exactly. Entries with pending_expert_input=true are placeholders: the Thai label is a direct translation of the model's class name, but NO symptom/cause/treatment content has been written yet. The bot renders those as 'ข้อมูลกำลังจัดทำ' rather than guessing. See docs/knowledge-review.md.",
+    "note": "Keys in 'class_name' MUST match config.yaml -> data.classes exactly.",
     "reject_class": "not_durian is handled by app/diagnosis.py (tier NOT_DURIAN) and deliberately has no disease entry here.",
-    "dosage_policy": "chemical_options never carry numeric application rates -- always 'ใช้ตามอัตราบนฉลาก'."
+    "dosage_policy": "chemical_options never carry numeric application rates -- always 'ใช้ตามอัตราบนฉลาก'.",
+    "sourcing_caveat": "Content was researched via web SEARCH only. The sandbox's egress proxy blocked every Thai agricultural site (doa.go.th, doae.go.th) and every journal (PMC, ScienceDirect, APS, Wiley), so NO reference URL below was actually opened and read. They are real links returned by a search index with matching titles -- leads to verify, not retrieved citations. Every entry is reviewed_by_expert: false. See docs/knowledge-review.md.",
+    "known_overlaps": "Canker and Stem_cracking_gummosis are the same Phytophthora palmivora lesion at two stages, not two diseases. Sooty_mold is a secondary consequence of Mealybug_infestation honeydew, never an independent infection. Yellow_leaf is a symptom, not a disease. Stem_blight's causal agent is UNRESOLVED across three candidates.",
+    "unresolved": "Stem_blight: the source dataset claims Phytophthora palmivora, Vietnamese literature reports Rhizoctonia solani AG1-ID (โรคใบติด), and current Thai reports point to Fusarium solani (โรคกิ่งแห้ง). These have different chemical control. Only sanitation advice safe under all three is included. Resolve by inspecting images in the Stem_blight folder."
   },
   "diseases": [
     {
@@ -42,6 +45,131 @@
       "pending_expert_input": false
     },
     {
+      "class_name": "Canker",
+      "slug": "canker",
+      "name_th": "โรคโคนเน่า (แผลเน่าที่ลำต้น)",
+      "name_en": "Patch canker / Stem canker",
+      "pathogen": "Phytophthora palmivora",
+      "type": "oomycete",
+      "severity": "severe",
+      "affected_parts": ["ลำต้น", "กิ่ง", "ราก"],
+      "symptoms": [
+        "มีรอยคราบน้ำสีน้ำตาลแดงไหลออกจากเปลือกลำต้นหรือโคนต้นครับ",
+        "ถากเปลือกตรงนั้นดู จะเห็นเนื้อไม้เป็นแผลสีน้ำตาล ฉ่ำน้ำ",
+        "ใบเหลืองและร่วงเฉพาะกิ่งที่อยู่เหนือแผลก่อนครับ"
+      ],
+      "causes_conditions": [
+        "เชื้อรา Phytophthora palmivora ที่อยู่ในดิน เข้าทางแผลหรือรอยช้ำที่โคนต้นครับ",
+        "ระบาดหนักช่วงฝนชุก ดินแฉะ น้ำขังโคนต้น และในสวนที่โคนต้นถูกรถหรือเครื่องมือชนบ่อย"
+      ],
+      "immediate_actions": [
+        "ระบายน้ำออกจากโคนต้นให้แห้งก่อนเป็นอันดับแรกครับ",
+        "ถากเปลือกส่วนที่เป็นแผลออกให้ถึงเนื้อดี แล้วเก็บเศษเปลือกไปเผาทิ้งนอกสวน",
+        "ทาแผลด้วยสารป้องกันกำจัดโรคพืชกลุ่มที่ใช้กับเชื้อไฟทอปธอรา"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "เมทาแลกซิล (metalaxyl)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "ฟอสอีทิล-อะลูมิเนียม (fosetyl-aluminium)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "โพแทสเซียมฟอสโฟเนต (potassium phosphonate)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "ยกโคกปลูกให้สูง ทำร่องระบายน้ำ อย่าให้น้ำขังโคนต้นครับ",
+        "ตัดแต่งกิ่งล่างให้โคนต้นโปร่ง ลมพัดผ่าน โคนต้นแห้งเร็ว"
+      ],
+      "when_to_call_expert": "ถ้าแผลลามเกินครึ่งรอบโคนต้น หรือพบหลายต้นในแปลงเดียวกัน ให้เรียกเจ้าหน้าที่เกษตรมาดูหน้างานครับ",
+      "images": [],
+      "references": [
+        { "title": "รากเน่าโคนเน่าในทุเรียน สังเกตก่อน รักษาทัน — ศูนย์ข่าวกรมส่งเสริมการเกษตร", "url": "https://doaenews.doae.go.th/archives/22204" },
+        { "title": "โรคของทุเรียน — กรมวิชาการเกษตร", "url": "https://www.doa.go.th/share/attachment.php?aid=2976" },
+        { "title": "Patch Canker of Durio zibethinus Caused by Phytophthora palmivora in Brunei Darussalam — Plant Disease (APS)", "url": "https://apsjournals.apsnet.org/doi/10.1094/PDIS.1997.81.1.113C" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Fruit_rot",
+      "slug": "fruit-rot",
+      "name_th": "โรคผลเน่า",
+      "name_en": "Fruit rot",
+      "pathogen": "Phytophthora palmivora (ในแปลง) / Lasiodiplodia theobromae (หลังเก็บเกี่ยว)",
+      "type": "oomycete",
+      "severity": "severe",
+      "affected_parts": ["ผล"],
+      "symptoms": [
+        "เริ่มจากจุดแผลเล็ก ๆ สีน้ำตาลดำบนผิวผลครับ",
+        "แผลขยายกว้างขึ้นเรื่อย ๆ โดยเฉพาะเมื่อผลใกล้สุก",
+        "ถ้าอากาศชื้นจัด จะเห็นเส้นใยสีขาวขึ้นคลุมบริเวณแผล"
+      ],
+      "causes_conditions": [
+        "เชื้อรา Phytophthora palmivora กระเด็นจากดินขึ้นไปติดผลตอนฝนตกหนักครับ",
+        "เชื้อรา Lasiodiplodia เข้าทางแผลช้ำตอนเก็บและขนย้าย ทำให้ผลเน่าหลังเก็บเกี่ยว"
+      ],
+      "immediate_actions": [
+        "เก็บผลเน่าและผลร่วงออกจากสวน นำไปฝังหรือเผาให้หมดครับ",
+        "ตัดแต่งกิ่งที่ห้อยต่ำ อย่าให้ผลอยู่ใกล้พื้นดิน",
+        "พ่นสารป้องกันกำจัดโรคพืชให้ทั่วทรงพุ่มและผล ในช่วงฝนชุก"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "เมทาแลกซิล (metalaxyl)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "ฟอสอีทิล-อะลูมิเนียม (fosetyl-aluminium)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "โพรคลอราซ (prochloraz)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "เก็บผลร่วงและซากพืชใต้ต้นให้สะอาด ตัดวงจรเชื้อครับ",
+        "เก็บเกี่ยวอย่างระมัดระวัง อย่าให้ผลช้ำหรือขั้วหัก"
+      ],
+      "when_to_call_expert": "ถ้าผลเน่าเสียหายเกินสิบเปอร์เซ็นต์ของผลผลิต หรือเน่าลามเร็วหลังเก็บเกี่ยว ให้ปรึกษาเจ้าหน้าที่เกษตรครับ",
+      "images": [],
+      "references": [
+        { "title": "เชื้อรา Lasiodiplodia species สาเหตุโรคผลเน่าทุเรียนในประเทศไทย — ศูนย์นวัตกรรมเทคโนโลยีหลังการเก็บเกี่ยว", "url": "https://www.phtnet.org/2021/06/2073/" },
+        { "title": "ประสิทธิภาพของสารเคมีต่อการควบคุม Lasiodiplodia theobromae สาเหตุโรคผลเน่าในทุเรียน — วารสารวิทยาศาสตร์และเทคโนโลยีสู่ชุมชน", "url": "https://li02.tci-thaijo.org/index.php/STC/article/view/1132" },
+        { "title": "Phytophthora palmivora as a Causal Pathogen of Stem Canker and Fruit Rot of Durio zibethinus in China — Journal of Phytopathology (2025)", "url": "https://onlinelibrary.wiley.com/doi/10.1111/jph.70089" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Mealybug_infestation",
+      "slug": "mealybug-infestation",
+      "name_th": "เพลี้ยแป้ง",
+      "name_en": "Mealybug infestation",
+      "pathogen": "Planococcus minor",
+      "type": "insect",
+      "severity": "moderate",
+      "affected_parts": ["ใบ", "กิ่ง", "ผล"],
+      "symptoms": [
+        "เห็นตัวแมลงสีขาวคล้ายผงแป้งเกาะเป็นกลุ่มตามร่องหนามและขั้วผลครับ",
+        "ใบและผลเหนียวเยิ้ม เพราะน้ำหวานที่เพลี้ยขับออกมา",
+        "ต่อมาจะมีคราบดำ (ราดำ) ขึ้นตามรอยเหนียวนั้น และมักมีมดเดินขึ้นลงต้น"
+      ],
+      "causes_conditions": [
+        "เพลี้ยแป้ง Planococcus minor ดูดน้ำเลี้ยงจากกิ่ง ช่อดอก และผลครับ",
+        "ระบาดหนักช่วงอากาศร้อนแล้ง ระยะใกล้เก็บเกี่ยว และมีมดคอยคาบไปปล่อยตามต้น"
+      ],
+      "immediate_actions": [
+        "ถ้าพบไม่มาก ให้ใช้แปรงปัดออก หรือฉีดน้ำแรง ๆ ล้างออกจากผลครับ",
+        "กำจัดทางเดินมด เพราะมดเป็นตัวพาเพลี้ยแป้งไปทั่วต้น",
+        "พ่นสารกำจัดแมลง เน้นใต้ใบ ซอกใบ และขั้วผลที่เพลี้ยชอบหลบ"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "ไวท์ออยล์ (white oil / petroleum spray oil)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "มาลาไทออน (malathion)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "คาร์บาริล (carbaryl)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "สำรวจขั้วผลและร่องหนามทุกสัปดาห์ในช่วงแล้ง พบแต่เนิ่น ๆ จัดการง่ายครับ",
+        "ตัดแต่งทรงพุ่มให้โปร่ง และควบคุมมดในสวนไม่ให้ขึ้นต้น"
+      ],
+      "when_to_call_expert": "ถ้าจะส่งผลผลิตออกนอกประเทศและยังพบเพลี้ยแป้งติดผล ให้ปรึกษาเจ้าหน้าที่เกษตรก่อนตัดผลครับ เพราะมีผลต่อการตรวจส่งออก",
+      "images": [],
+      "references": [
+        { "title": "เตือนชาวสวนไม้ผลระวังเพลี้ยแป้งทุเรียนระยะใกล้เก็บเกี่ยวช่วงฤดูแล้ง — กรมส่งเสริมการเกษตร", "url": "https://secreta.doae.go.th/?p=4599" },
+        { "title": "แมลงศัตรูของทุเรียน — กรมวิชาการเกษตร", "url": "https://www.doa.go.th/share/attachment.php?aid=2977" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
       "class_name": "Pink_disease",
       "slug": "pink-disease",
       "name_th": "โรคราสีชมพู",
@@ -77,6 +205,207 @@
       "pending_expert_input": false
     },
     {
+      "class_name": "Sooty_mold",
+      "slug": "sooty-mold",
+      "name_th": "โรคราดำ",
+      "name_en": "Sooty mold",
+      "pathogen": "Capnodium sp. และเชื้อราผิวใบชนิดอื่น",
+      "type": "fungus",
+      "severity": "watch",
+      "affected_parts": ["ใบ", "กิ่ง", "ผล"],
+      "symptoms": [
+        "มีคราบเขม่าดำคล้ายเขม่าไฟ เกาะอยู่บนผิวใบและผิวผลครับ",
+        "คราบดำมักขึ้นหนาแถวไหล่ผลและร่องหนาม",
+        "เอามือลูบหรือล้างน้ำแล้วคราบหลุดออกได้ ผิวข้างใต้ยังดีอยู่"
+      ],
+      "causes_conditions": [
+        "ราดำขึ้นบนน้ำหวานที่เพลี้ยแป้ง เพลี้ยหอย หรือแมลงหวี่ขาวขับถ่ายทิ้งไว้ครับ ไม่ได้เข้าทำลายต้นเอง",
+        "พบมากในทรงพุ่มแน่นทึบ ความชื้นสูง และในสวนที่มีเพลี้ยระบาดอยู่ก่อน"
+      ],
+      "immediate_actions": [
+        "หาตัวแมลงให้เจอก่อนครับ ถ้าไม่กำจัดเพลี้ย ราดำก็จะกลับมาอีก การพ่นยาฆ่าเชื้อราอย่างเดียวไม่ช่วย",
+        "ฉีดน้ำหรือเช็ดล้างคราบดำออกจากใบและผล",
+        "ตัดแต่งทรงพุ่มให้โปร่ง ให้แดดส่องและลมพัดผ่าน"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "ไวท์ออยล์ (white oil) — เป็นสารกำจัดแมลง ใช้กับเพลี้ยที่เป็นต้นเหตุ ไม่ใช่กับราดำโดยตรง", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "มาลาไทออน (malathion) — เป็นสารกำจัดแมลง ใช้กับเพลี้ยที่เป็นต้นเหตุ", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "คุมเพลี้ยแป้งและเพลี้ยหอยให้อยู่หมัด ราดำจะหายไปเองครับ",
+        "ตัดแต่งทรงพุ่มทุกปี ไม่ให้ชื้นอบอยู่ข้างใน"
+      ],
+      "when_to_call_expert": "ถ้าล้างคราบแล้วยังกลับมาเร็ว หรือหาต้นเหตุแมลงไม่เจอ ให้เจ้าหน้าที่เกษตรมาช่วยดูว่าเป็นเพลี้ยชนิดใดครับ",
+      "images": [],
+      "references": [
+        { "title": "โรคราดำ — ศูนย์วิทยบริการเพื่อส่งเสริมการเกษตร กรมส่งเสริมการเกษตร", "url": "https://esc.doae.go.th/โรคราดำ/" },
+        { "title": "โรคของทุเรียน — กรมวิชาการเกษตร", "url": "https://www.doa.go.th/share/attachment.php?aid=2976" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Stem_blight",
+      "slug": "stem-blight",
+      "name_th": "โรคกิ่งแห้ง",
+      "name_en": "Stem blight / branch dieback",
+      "pathogen": "ยังไม่สรุปสาเหตุแน่ชัด (มีรายงานทั้ง Fusarium solani, Rhizoctonia solani และ Phytophthora palmivora)",
+      "type": "fungus",
+      "severity": "severe",
+      "affected_parts": ["กิ่ง", "ลำต้น", "ใบ"],
+      "symptoms": [
+        "กิ่งแห้งตายเป็นกิ่ง ๆ ทั้งที่กิ่งข้าง ๆ ยังเขียวดีครับ",
+        "ใบบนกิ่งนั้นเหลือง แล้วร่วงจนกิ่งโล้น",
+        "เปลือกกิ่งที่ตายจะแห้งกร้าน ปาดดูเนื้อไม้ข้างในเปลี่ยนเป็นสีน้ำตาล"
+      ],
+      "causes_conditions": [
+        "เชื้อราเข้าทางแผลตัดแต่งกิ่งหรือรอยแตกของเปลือกครับ",
+        "ต้นที่โทรม ให้ผลดกเกินกำลัง หรือรากไม่ดีอยู่แล้ว จะเป็นง่ายกว่าต้นที่แข็งแรง"
+      ],
+      "immediate_actions": [
+        "ตัดกิ่งที่แห้งออก ตัดลึกเข้ามาในเนื้อดีพอสมควร แล้วเผาทิ้งนอกสวนครับ",
+        "เช็ดใบมีดและกรรไกรตัดแต่งด้วยแอลกอฮอล์ทุกครั้งก่อนย้ายต้น อย่าให้พาเชื้อไปติดต้นอื่น",
+        "ทาแผลรอยตัดด้วยสารกลุ่มคอปเปอร์ และบำรุงต้นให้ฟื้น"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "สารกลุ่มคอปเปอร์ (copper) สำหรับทาแผลรอยตัด", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "ตัดแต่งกิ่งในช่วงแล้ง ไม่ตัดตอนฝนชุก แผลจะแห้งเร็วครับ",
+        "อย่าไว้ผลดกเกินกำลังต้น ต้นที่แข็งแรงจะสู้โรคได้ดีกว่า"
+      ],
+      "when_to_call_expert": "โรคกิ่งแห้งแยกสาเหตุยากมากครับ เพราะมีได้หลายเชื้อและใช้สารคนละตัวกัน ถ้าพบมากกว่าสองสามกิ่งต่อต้น หรือเป็นหลายต้น ควรให้เจ้าหน้าที่เกษตรเก็บตัวอย่างไปตรวจหาเชื้อก่อนตัดสินใจใช้สารครับ",
+      "images": [],
+      "references": [
+        { "title": "โฉมหน้าลับ เชื้อราก่อโรคกิ่งแห้งทุเรียน — สถาบันวิจัยและพัฒนาแห่ง ม.เกษตรศาสตร์", "url": "https://www3.rdi.ku.ac.th/?p=96077" },
+        { "title": "ปัจจัยทางสรีรวิทยาต่อการเจริญของ Fusarium solani สาเหตุโรคกิ่งแห้งกับทุเรียน — วารสารแก่นเกษตร", "url": "https://li01.tci-thaijo.org/index.php/agkasetkaj/article/view/249549" },
+        { "title": "First Report of Rhizoctonia solani Subgroup AG 1-ID Causing Leaf Blight on Durian in Vietnam — Plant Disease (APS)", "url": "https://apsjournals.apsnet.org/doi/10.1094/PDIS-92-4-0648B" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Stem_cracking_gummosis",
+      "slug": "stem-cracking-gummosis",
+      "name_th": "โรคยางไหล (ลำต้นแตก มียางไหล)",
+      "name_en": "Stem cracking and gummosis",
+      "pathogen": "Phytophthora palmivora",
+      "type": "oomycete",
+      "severity": "severe",
+      "affected_parts": ["ลำต้น", "กิ่ง"],
+      "symptoms": [
+        "เปลือกลำต้นแตกเป็นรอยยาว มียางหรือน้ำเหนียวสีน้ำตาลไหลซึมออกมาครับ",
+        "รอบรอยแตกมีคราบแห้งกรังติดอยู่บนเปลือก",
+        "ปาดเปลือกตรงนั้นออก จะเห็นเนื้อไม้ข้างในเป็นแผลสีน้ำตาลฉ่ำน้ำ"
+      ],
+      "causes_conditions": [
+        "เป็นเชื้อตัวเดียวกับโรคโคนเน่า คือ Phytophthora palmivora ที่ลามจากดินขึ้นมาบนลำต้นครับ",
+        "เกิดหนักช่วงฝนตกติดต่อกัน ดินระบายน้ำไม่ดี หรือปลูกชิดเกินไปจนอับลม"
+      ],
+      "immediate_actions": [
+        "รีบระบายน้ำออกจากแปลง อย่าให้น้ำแช่โคนต้นครับ",
+        "ถากเปลือกและเนื้อไม้ที่เป็นแผลออกให้ถึงเนื้อดี แล้วเก็บเศษไปเผานอกสวน",
+        "ทาแผลด้วยสารป้องกันกำจัดโรคพืช และทาปูนขาวที่โคนต้นหลังแผลแห้ง"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "เมทาแลกซิล (metalaxyl)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "ฟอสอีทิล-อะลูมิเนียม (fosetyl-aluminium)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "โพแทสเซียมฟอสโฟเนต (potassium phosphonate)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "ปลูกระยะห่างพอให้ลมพัดผ่าน และยกโคกให้สูง น้ำไม่ขังครับ",
+        "ทาปูนขาวที่โคนต้นหลังเก็บเกี่ยวและต้นฤดูฝน"
+      ],
+      "when_to_call_expert": "ถ้ายางไหลหลายจุดบนต้นเดียวกัน หรือใบเริ่มร่วงทั้งต้น ให้เรียกเจ้าหน้าที่เกษตรมาประเมินว่าควรรักษาต่อหรือโค่นทิ้งครับ",
+      "images": [],
+      "references": [
+        { "title": "รากเน่าโคนเน่าในทุเรียน สังเกตก่อน รักษาทัน — ศูนย์ข่าวกรมส่งเสริมการเกษตร", "url": "https://doaenews.doae.go.th/archives/22204" },
+        { "title": "Phytophthora Diseases of Durian and durian-decline syndrome in northern Queensland — QLD DPI", "url": "https://era.dpi.qld.gov.au/id/eprint/10667/1/Phytophthora%20diseases%20of%20durian,%20and%20durian-decline%20syndrome%20in%20northern%20Queensland,%20Australia.pdf" },
+        { "title": "Phytophthora palmivora; Root rot, stem rot, fruit rot — PlantwisePlus Knowledge Bank (CABI)", "url": "https://plantwiseplusknowledgebank.org/doi/full/10.1079/pwkb.20187800447" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Thrips",
+      "slug": "thrips",
+      "name_th": "เพลี้ยไฟ (เพลี้ยไฟพริก)",
+      "name_en": "Thrips (chilli thrips)",
+      "pathogen": "Scirtothrips dorsalis",
+      "type": "insect",
+      "severity": "moderate",
+      "affected_parts": ["ใบ", "ดอก", "ผล"],
+      "symptoms": [
+        "ใบอ่อนหงิกงอ ม้วน แคระแกร็น ดูแห้งกร้านเหมือนโดนแดดเผาครับ",
+        "ช่วงออกดอก ดอกและก้านดอกเป็นสีน้ำตาล แห้งแล้วร่วง",
+        "ผลอ่อนโตช้า ผิวเป็นรอย หนามจีบ ปลายหนามแห้ง ผลบิดเบี้ยว"
+      ],
+      "causes_conditions": [
+        "เพลี้ยไฟพริก Scirtothrips dorsalis ทั้งตัวอ่อนและตัวเต็มวัยดูดน้ำเลี้ยงจากใบอ่อน ดอก และผลอ่อนครับ",
+        "ระบาดหนักช่วงแล้ง ราวเดือนธันวาคมถึงพฤษภาคม ซึ่งตรงกับระยะแตกใบอ่อน ออกดอก และติดผลอ่อนพอดี"
+      ],
+      "immediate_actions": [
+        "สำรวจใบอ่อนและช่อดอก ถ้าพบตัวเล็ก ๆ สีเหลืองอ่อนวิ่งไปมา ให้รีบจัดการครับ",
+        "ให้น้ำสม่ำเสมอในช่วงแล้ง อย่าให้ต้นขาดน้ำ เพลี้ยไฟจะระบาดน้อยลง",
+        "พ่นสารกำจัดแมลง โดยสลับกลุ่มสารทุกรอบ อย่าใช้ตัวเดิมซ้ำติดกันหลายครั้ง"
+      ],
+      "chemical_options": [
+        { "active_ingredient": "สไปนีโทแรม (spinetoram)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "ไซแอนทรานิลิโพรล (cyantraniliprole)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "อิมิดาโคลพริด (imidacloprid)", "note": "ใช้ตามอัตราบนฉลาก" },
+        { "active_ingredient": "ฟิโพรนิล (fipronil)", "note": "ใช้ตามอัตราบนฉลาก" }
+      ],
+      "prevention": [
+        "สำรวจแปลงทุกสัปดาห์ในช่วงแล้ง โดยเฉพาะตอนแตกใบอ่อนและออกดอกครับ",
+        "สลับกลุ่มสารทุกครั้งที่พ่น ไม่ให้เพลี้ยไฟดื้อยา"
+      ],
+      "when_to_call_expert": "ถ้าพ่นสารแล้วเพลี้ยไฟยังไม่ลด แสดงว่าอาจดื้อยาแล้ว ให้ปรึกษาเจ้าหน้าที่เกษตรเรื่องการสลับกลุ่มสารครับ",
+      "images": [],
+      "references": [
+        { "title": "เตือนภัยการเกษตร — คณะทำงานพยากรณ์และเตือนภัยศัตรูพืช กรมวิชาการเกษตร", "url": "https://www.opsmoac.go.th/krabi-warning-files-471291791867" },
+        { "title": "แมลงศัตรูของทุเรียน — กรมวิชาการเกษตร", "url": "https://www.doa.go.th/share/attachment.php?aid=2977" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
+      "class_name": "Yellow_leaf",
+      "slug": "yellow-leaf",
+      "name_th": "อาการใบเหลือง",
+      "name_en": "Yellow leaf (symptom, not a disease)",
+      "pathogen": null,
+      "type": "disorder",
+      "severity": "watch",
+      "affected_parts": ["ใบ", "ราก"],
+      "symptoms": [
+        "ใบเปลี่ยนเป็นสีเหลืองซีด อาจเหลืองทั้งใบหรือเหลืองระหว่างเส้นใบครับ",
+        "ใบห้อยลู่ ไม่ตั้งชูเหมือนปกติ และร่วงง่ายกว่าเดิม",
+        "บางทีเหลืองเฉพาะบางกิ่ง บางทีเหลืองทั้งต้น ซึ่งบอกสาเหตุคนละอย่างกันครับ"
+      ],
+      "causes_conditions": [
+        "ใบเหลืองเป็นอาการ ไม่ใช่ชื่อโรคครับ สาเหตุที่พบบ่อยที่สุดคือน้ำขังหรือดินระบายน้ำไม่ดี ทำให้รากขาดอากาศและเน่า",
+        "รองลงมาคือขาดธาตุอาหาร เช่น ไนโตรเจน แมกนีเซียม หรือเหล็ก และดินเปรี้ยวหรือด่างเกินจนต้นดูดธาตุอาหารไม่ขึ้น"
+      ],
+      "immediate_actions": [
+        "ไปดูโคนต้นก่อนเลยครับ ถ้าเจอรอยยางไหลหรือแผลที่โคน แปลว่าเป็นโรคโคนเน่า ให้ทำตามวิธีของโรคนั้น",
+        "ขุดร่องระบายน้ำ อย่าให้น้ำแช่โคนต้น และลดการให้น้ำลงถ้าดินยังแฉะ",
+        "ถ้าโคนต้นปกติดี ให้ตรวจดินและปรับธาตุอาหารตามผลตรวจ ไม่ควรเดาแล้วใส่ปุ๋ยเพิ่มครับ"
+      ],
+      "chemical_options": [],
+      "prevention": [
+        "ยกโคกปลูกให้สูง ทำร่องระบายน้ำไว้ตั้งแต่แรก อย่ารอให้ท่วมครับ",
+        "ตรวจดินและใส่ปุ๋ยตามค่าวิเคราะห์ดิน ปีละครั้ง"
+      ],
+      "when_to_call_expert": "ถ้าใบเหลืองลามเร็วภายในหนึ่งถึงสองสัปดาห์ หรือเหลืองพร้อมกันหลายต้น ควรให้เจ้าหน้าที่เกษตรมาตรวจรากและดินโดยด่วนครับ เพราะอาจเป็นรากเน่าที่ยังไม่แสดงแผลที่โคน",
+      "images": [],
+      "references": [
+        { "title": "รากเน่าโคนเน่าในทุเรียน สังเกตก่อน รักษาทัน — ศูนย์ข่าวกรมส่งเสริมการเกษตร", "url": "https://doaenews.doae.go.th/archives/22204" },
+        { "title": "First report of Phytopythium vexans causing root rot disease on durian in Vietnam — New Disease Reports (2020)", "url": "https://bsppjournals.onlinelibrary.wiley.com/doi/full/10.5197/j.2044-0588.2020.041.002" }
+      ],
+      "reviewed_by_expert": false,
+      "pending_expert_input": false
+    },
+    {
       "class_name": "Healthy",
       "slug": "healthy",
       "name_th": "ต้นแข็งแรงดี",
@@ -102,167 +431,6 @@
       "references": [],
       "reviewed_by_expert": false,
       "pending_expert_input": false
-    },
-
-    {
-      "class_name": "Canker",
-      "slug": "canker",
-      "name_th": "โรคแคงเกอร์",
-      "name_en": "Canker",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Fruit_rot",
-      "slug": "fruit-rot",
-      "name_th": "โรคผลเน่า",
-      "name_en": "Fruit rot",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Mealybug_infestation",
-      "slug": "mealybug-infestation",
-      "name_th": "เพลี้ยแป้ง",
-      "name_en": "Mealybug infestation",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Sooty_mold",
-      "slug": "sooty-mold",
-      "name_th": "โรคราดำ",
-      "name_en": "Sooty mold",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Stem_blight",
-      "slug": "stem-blight",
-      "name_th": "โรคลำต้นไหม้",
-      "name_en": "Stem blight",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Stem_cracking_gummosis",
-      "slug": "stem-cracking-gummosis",
-      "name_th": "โรคลำต้นแตก-ยางไหล",
-      "name_en": "Stem cracking / gummosis",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Thrips",
-      "slug": "thrips",
-      "name_th": "เพลี้ยไฟ",
-      "name_en": "Thrips",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
-    },
-    {
-      "class_name": "Yellow_leaf",
-      "slug": "yellow-leaf",
-      "name_th": "อาการใบเหลือง",
-      "name_en": "Yellow leaf",
-      "pathogen": null,
-      "type": null,
-      "severity": "watch",
-      "affected_parts": [],
-      "symptoms": [],
-      "causes_conditions": [],
-      "immediate_actions": [],
-      "chemical_options": [],
-      "prevention": [],
-      "when_to_call_expert": "",
-      "images": [],
-      "references": [],
-      "reviewed_by_expert": false,
-      "pending_expert_input": true
     }
   ]
 }

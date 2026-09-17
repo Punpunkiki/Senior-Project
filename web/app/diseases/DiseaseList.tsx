@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Disease, PART_FILTERS, TYPE_LABEL_TH } from "@/lib/types";
 import { DiseaseCard } from "@/components/ui";
 
-const TYPE_FILTERS = ["fungus", "insect", "algae", "oomycete"];
+const TYPE_FILTERS = ["fungus", "oomycete", "insect", "algae", "disorder"];
 
 export function DiseaseList({ diseases }: { diseases: Disease[] }) {
   const [query, setQuery] = useState("");

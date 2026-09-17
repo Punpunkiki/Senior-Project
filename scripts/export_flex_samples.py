@@ -16,7 +16,16 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from app.flex import builders as B  # noqa: E402
-from app.knowledge import load_knowledge_base  # noqa: E402
+from app.knowledge import Disease, load_knowledge_base  # noqa: E402
+
+# Every class currently has content, so the "awaiting expert content" layout is
+# demonstrated with a synthetic entry rather than silently disappearing from
+# the samples -- the bot still needs that path when a new class is added.
+PENDING_EXAMPLE = Disease(
+    class_name="Example_pending", slug="example-pending",
+    name_th="โรคตัวอย่างที่ยังไม่มีข้อมูล", name_en="Example pending entry",
+    pathogen=None, type=None, severity="watch", pending_expert_input=True,
+)
 
 OUT_DIR = REPO_ROOT / "docs" / "flex-samples"
 WEB = "https://example.org"
@@ -36,7 +45,7 @@ def main() -> int:
         "result-healthy": B.build_result_bubble(
             kb.by_class("Healthy"), 0.96, detail_url=DETAIL),
         "result-pending-content": B.build_result_bubble(
-            kb.by_class("Canker"), 0.88, detail_url=DETAIL),
+            PENDING_EXAMPLE, 0.88, detail_url=DETAIL),
         "result-uncertain-top2": B.build_uncertain_bubble(
             kb.by_class("Anthracnose"), 0.61,
             kb.by_class("Pink_disease"), 0.24, detail_url=DETAIL),
