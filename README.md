@@ -152,11 +152,52 @@ src/
   interpret.py              # Grad-CAM (CNN + Swin) + occlusion test
   compare.py                # cross-model comparison table + plots
   download_data.py          # Mendeley fetch helper
+  actions.py                # [DL-ACTIONS] turns findings into applied fixes
 scripts/smoke_test.py       # offline code-path validation (no data/GPU)
 reports/
   DECISION_LOG.md           # every decision, audit-ready
   RESULTS.md                # results template (fill by running) + limitations
 outputs/                    # weights, figures, confusion matrices, gradcam, json
+
+app/                        # "หมอทุเรียน" LINE OA service (wraps the model)
+  main.py                   # FastAPI: /webhook, /api/*, serves the website
+  line_handler.py           # LINE event routing + conversation state machine
+  diagnosis.py              # confidence tiers (confident / uncertain / reject)
+  ml/predictor.py           # single-image inference over outputs/<model>/best.pt
+  data/diseases.json        # knowledge base, keyed by model class name
+web/                        # Next.js site + LIFF result page (static export)
+line-assets/                # Rich Menu, profile, rich messages + HANDOFF.md
+tools/render_rich_messages.py
+docs/DEPLOY.md              # ติดตั้ง / deploy / เพิ่มรายการใหม่ (ภาษาไทย)
+Dockerfile                  # one image: API + website on the same origin
+```
+
+## The LINE bot ("หมอทุเรียน")
+
+The classifier is wrapped, unmodified, into a LINE Official Account that
+farmers use from their phone: send a photo of the affected leaf, branch,
+trunk or fruit, get a preliminary assessment back with what to do next.
+
+- **Deploy and setup guide (ภาษาไทย):** [`docs/DEPLOY.md`](docs/DEPLOY.md) —
+  local + ngrok, Docker, Cloud Run, and how to add a new entry.
+- **LINE OA Manager handoff (ภาษาไทย):**
+  [`line-assets/HANDOFF.md`](line-assets/HANDOFF.md) — Rich Menu tap areas,
+  greeting text, and every value to fill in after deploy.
+
+Two properties are deliberate and load-bearing:
+
+1. **It refuses rather than guesses.** Below the confidence floor, or on a
+   non-durian photo, it says so. With no trained checkpoint present it
+   answers "ระบบยังไม่พร้อมใช้งาน" instead of serving an untrained backbone.
+2. **It never invents agronomy.** Content lives in one file shared by the bot
+   and the website; entries awaiting expert review render as "ข้อมูลกำลังจัดทำ",
+   and a test forbids numeric chemical rates anywhere in it.
+
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install -r requirements-app.txt
+cd web && npm ci && npm run build && cd ..
+uvicorn app.main:app --reload --port 8000     # http://localhost:8000
 ```
 
 ## Results & reasoning

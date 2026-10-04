@@ -1,0 +1,46 @@
+# Keep the build context small and never ship secrets or datasets.
+# NOTE: outputs/ is deliberately NOT ignored -- that is where the trained
+# checkpoint lives and the image needs it.
+
+.git
+.gitignore
+
+# datasets (gigabytes, downloaded separately)
+/data/
+/data_ood/
+*.zip
+
+# secrets and local runtime state
+.env
+.env.local
+*.db
+*.sqlite3
+/uploads/
+
+# node / next build artifacts (stage 1 builds these itself)
+web/node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# not needed at runtime
+/tests/
+/notebooks/
+/docs/
+/reports/
+/line-assets/
+/tools/
+/scripts/
+.ipynb_checkpoints/
+
+# os / editor
+.DS_Store
+*.swp
