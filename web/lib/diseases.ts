@@ -14,7 +14,8 @@ import path from "node:path";
 import type { Disease } from "./types";
 
 export type { Disease, Severity, ChemicalOption, Reference } from "./types";
-export { SEVERITY_LABEL_TH, TYPE_LABEL_TH, PART_FILTERS } from "./types";
+export { SEVERITY_LABEL_TH, TYPE_LABEL_TH, NEXT_ACTION_TH,
+         stripPolite } from "./types";
 
 const KB_PATH = path.join(process.cwd(), "..", "app", "data", "diseases.json");
 

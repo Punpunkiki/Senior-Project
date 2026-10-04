@@ -34,6 +34,10 @@ class Disease:
     chemical_options: List[Dict[str, str]] = field(default_factory=list)
     prevention: List[str] = field(default_factory=list)
     when_to_call_expert: str = ""
+    # Clarifies when two classes share one underlying cause -- Canker and
+    # Stem_cracking_gummosis are the same Phytophthora lesion at two stages,
+    # kept as separate classes but explained to the reader.
+    related_note: str = ""
     images: List[str] = field(default_factory=list)
     references: List[Dict[str, str]] = field(default_factory=list)
     reviewed_by_expert: bool = False

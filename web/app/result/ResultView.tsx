@@ -18,9 +18,9 @@ const SEVERITY_COLOR: Record<Severity, string> = {
 
 const TIER_TITLE: Record<string, string> = {
   confident: "ผลตรวจ",
-  uncertain_top2: "อาจเป็นโรคนี้ครับ",
-  not_confident: "ยังไม่แน่ใจครับ",
-  not_durian: "ภาพนี้ไม่ใช่ทุเรียนครับ",
+  uncertain_top2: "อาจเป็นโรคนี้",
+  not_confident: "ยังไม่แน่ใจ",
+  not_durian: "ภาพนี้ไม่ใช่ทุเรียน",
 };
 
 interface Prediction {
@@ -126,8 +126,8 @@ export function ResultView() {
   if (status === "notfound") {
     return (
       <div className="notice">
-        <h1>ไม่พบผลตรวจนี้ครับ</h1>
-        <p>ลิงก์อาจหมดอายุ หรือถูกลบไปแล้ว ลองส่งรูปใหม่เข้ามาได้เลยครับ</p>
+        <h1>ไม่พบผลตรวจนี้</h1>
+        <p>ลิงก์อาจหมดอายุ หรือถูกลบไปแล้ว ลองส่งรูปใหม่เข้ามาได้เลย</p>
         <Link className="btn btn-primary" href="/diseases/">
           ดูคลังความรู้
         </Link>
@@ -138,10 +138,10 @@ export function ResultView() {
   if (status === "forbidden") {
     return (
       <div className="notice notice-danger">
-        <h1>ดูผลตรวจนี้ไม่ได้ครับ</h1>
+        <h1>ดูผลตรวจนี้ไม่ได้</h1>
         <p>
           ผลตรวจเปิดดูได้เฉพาะเจ้าของรูปเท่านั้น
-          กรุณาเปิดลิงก์นี้จากแชท LINE ของคุณเองนะครับ
+          กรุณาเปิดลิงก์นี้จากแชท LINE ของคุณเอง
         </p>
       </div>
     );
@@ -150,8 +150,8 @@ export function ResultView() {
   if (status === "error" || !data) {
     return (
       <div className="notice notice-danger">
-        <h1>ระบบกำลังยุ่งครับ</h1>
-        <p>ลองเปิดใหม่อีกครั้งนะครับ</p>
+        <h1>ระบบกำลังยุ่ง</h1>
+        <p>ลองเปิดใหม่อีกครั้ง</p>
       </div>
     );
   }
@@ -197,8 +197,8 @@ export function ResultView() {
       {disease?.pending_expert_input && (
         <div className="notice">
           <p>
-            ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ
-            ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ
+            ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่
+            ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรง
           </p>
         </div>
       )}

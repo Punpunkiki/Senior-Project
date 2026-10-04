@@ -1,6 +1,12 @@
 /** Shared presentational pieces used across pages. */
 import Link from "next/link";
-import { Disease, SEVERITY_LABEL_TH, Severity } from "@/lib/types";
+import {
+  Disease,
+  NEXT_ACTION_TH,
+  SEVERITY_LABEL_TH,
+  Severity,
+  stripPolite,
+} from "@/lib/types";
 
 export function SeverityBadge({ severity, pending }: {
   severity: Severity;
@@ -19,6 +25,15 @@ export function SeverityBadge({ severity, pending }: {
 export function ReviewedBadge({ reviewed }: { reviewed: boolean }) {
   if (!reviewed) return null;
   return <span className="badge badge-reviewed">✓ ตรวจทานโดยผู้เชี่ยวชาญแล้ว</span>;
+}
+
+/** The "so what do I do now" line. Never omitted. */
+export function NextAction({ severity }: { severity: Severity }) {
+  return (
+    <p className={`next-action next-action-${severity}`}>
+      <strong>เจอแล้วทำอะไรต่อ:</strong> {NEXT_ACTION_TH[severity]}
+    </p>
+  );
 }
 
 export function ConfidenceBar({ value, color }: {
@@ -68,9 +83,11 @@ export function DiseaseCard({ disease }: { disease: Disease }) {
         {disease.pathogen ? ` · ${disease.pathogen}` : ""}
       </p>
       <p>
-        {disease.symptoms[0] ??
-          "ข้อมูลอาการของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานครับ"}
+        {disease.symptoms[0]
+          ? stripPolite(disease.symptoms[0])
+          : "ข้อมูลของรายการนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทาน"}
       </p>
+      <NextAction severity={disease.severity} />
       <Link className="btn btn-secondary" href={`/diseases/${disease.slug}/`}>
         อ่านรายละเอียด
       </Link>

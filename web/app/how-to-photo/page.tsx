@@ -23,13 +23,13 @@ export default function HowToPhotoPage() {
       <div className="container">
         <h1>วิธีถ่ายรูปให้ตรวจแม่น</h1>
         <p>
-          หมอดูจากรูปอย่างเดียวครับ ถ้ารูปชัดและมีแสงพอ
-          ผลตรวจก็จะแม่นขึ้นมากครับ
+          หมอดูจากรูปอย่างเดียว ถ้ารูปชัดและมีแสงพอ
+          ผลตรวจก็จะแม่นขึ้นมาก
         </p>
 
         <div className="card-grid">
           <article className="card" style={{ borderColor: "var(--leaf-500)" }}>
-            <h2 style={{ color: "var(--leaf-500)" }}>✅ ถ่ายแบบนี้ดีครับ</h2>
+            <h2 style={{ color: "var(--leaf-500)" }}>✅ ถ่ายแบบนี้ดี</h2>
             <ul className="tick-list">
               {GOOD.map((tip) => (
                 <li key={tip}>{tip}</li>
@@ -38,7 +38,7 @@ export default function HowToPhotoPage() {
           </article>
 
           <article className="card" style={{ borderColor: "var(--danger-600)" }}>
-            <h2 style={{ color: "var(--danger-600)" }}>❌ แบบนี้ตรวจยากครับ</h2>
+            <h2 style={{ color: "var(--danger-600)" }}>❌ แบบนี้ตรวจยาก</h2>
             <ul className="tick-list">
               {BAD.map((tip) => (
                 <li key={tip}>{tip}</li>
@@ -49,8 +49,8 @@ export default function HowToPhotoPage() {
 
         <div className="notice">
           <p>
-            ถ้าไม่แน่ใจ ถ่ายมาหลายมุมแล้วส่งทีละรูปได้ครับ
-            หมอจะตรวจให้ทีละรูปเลยครับ
+            ถ้าไม่แน่ใจ ถ่ายมาหลายมุมแล้วส่งทีละรูปได้
+            หมอจะตรวจให้ทีละรูปเลย
           </p>
         </div>
       </div>

@@ -39,9 +39,8 @@ export default function RootLayout({
               หมอทุเรียน
             </Link>
             <nav className="site-nav" aria-label="เมนูหลัก">
+              <Link href="/">หน้าหลัก</Link>
               <Link href="/diseases/">คลังความรู้</Link>
-              <Link href="/how-to-photo/">วิธีถ่ายรูป</Link>
-              <Link href="/about/">เกี่ยวกับเรา</Link>
             </nav>
           </div>
         </header>

@@ -4,9 +4,14 @@ import {
   getAllDiseases,
   getBrowsableDiseases,
   getDiseaseBySlug,
-  TYPE_LABEL_TH,
 } from "@/lib/diseases";
-import { Disclaimer, ReviewedBadge, SeverityBadge } from "@/components/ui";
+import { stripPolite, TYPE_LABEL_TH } from "@/lib/types";
+import {
+  Disclaimer,
+  NextAction,
+  ReviewedBadge,
+  SeverityBadge,
+} from "@/components/ui";
 
 /** Static export needs every slug up front. */
 export function generateStaticParams() {
@@ -18,11 +23,13 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const disease = getDiseaseBySlug(slug);
-  if (!disease) return { title: "ไม่พบข้อมูลโรค — หมอทุเรียน" };
+  if (!disease) return { title: "ไม่พบข้อมูล — หมอทุเรียน" };
   return {
     title: `${disease.name_th} — หมอทุเรียน`,
     description:
-      disease.symptoms[0] ?? `ข้อมูลโรค ${disease.name_th} สำหรับชาวสวนทุเรียน`,
+      disease.symptoms[0]
+        ? stripPolite(disease.symptoms[0])
+        : `ข้อมูล ${disease.name_th} สำหรับชาวสวนทุเรียน`,
   };
 }
 
@@ -33,7 +40,7 @@ function Section({ title, items }: { title: string; items: string[] }) {
       <h2>{title}</h2>
       <ul className="tick-list">
         {items.map((item) => (
-          <li key={item}>{item}</li>
+          <li key={item}>{stripPolite(item)}</li>
         ))}
       </ul>
     </>
@@ -70,6 +77,17 @@ export default async function DiseasePage({ params }: Props) {
           {disease.type ? ` · ${TYPE_LABEL_TH[disease.type] ?? disease.type}` : ""}
         </p>
 
+        <NextAction severity={disease.severity} />
+
+        {disease.related_note && (
+          <div className="notice">
+            <p>
+              <strong>เกี่ยวข้องกับรายการอื่น:</strong>{" "}
+              {stripPolite(disease.related_note)}
+            </p>
+          </div>
+        )}
+
         {disease.affected_parts.length > 0 && (
           <p>
             <strong>ส่วนที่พบอาการ:</strong> {disease.affected_parts.join(", ")}
@@ -79,8 +97,8 @@ export default async function DiseasePage({ params }: Props) {
         {disease.pending_expert_input ? (
           <div className="notice">
             <p>
-              ข้อมูลคำแนะนำของโรคนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่ครับ
-              ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรงครับ
+              ข้อมูลคำแนะนำของรายการนี้กำลังจัดทำและรอผู้เชี่ยวชาญตรวจทานอยู่
+              ระหว่างนี้แนะนำให้ปรึกษาเจ้าหน้าที่เกษตรโดยตรง
             </p>
           </div>
         ) : (
@@ -89,7 +107,7 @@ export default async function DiseasePage({ params }: Props) {
               <div className="notice">
                 <p>
                   เนื้อหานี้ยังอยู่ระหว่างรอนักวิชาการเกษตรตรวจทาน
-                  โปรดใช้เป็นข้อมูลเบื้องต้นเท่านั้นครับ
+                  โปรดใช้เป็นข้อมูลเบื้องต้นเท่านั้น
                 </p>
               </div>
             )}
@@ -112,7 +130,7 @@ export default async function DiseasePage({ params }: Props) {
                 <div className="notice notice-danger">
                   <p>
                     อ่านฉลากและใช้ตามอัตราที่ระบุบนฉลากเสมอ
-                    และปรึกษาเจ้าหน้าที่เกษตรก่อนใช้สารเคมีครับ
+                    และปรึกษาเจ้าหน้าที่เกษตรก่อนใช้สารเคมี
                   </p>
                 </div>
               </>
@@ -123,7 +141,7 @@ export default async function DiseasePage({ params }: Props) {
             {disease.when_to_call_expert && (
               <>
                 <h2>📞 เมื่อไหร่ควรเรียกผู้เชี่ยวชาญ</h2>
-                <p>{disease.when_to_call_expert}</p>
+                <p>{stripPolite(disease.when_to_call_expert)}</p>
               </>
             )}
 
@@ -148,7 +166,7 @@ export default async function DiseasePage({ params }: Props) {
 
         {related.length > 0 && (
           <>
-            <h2>โรคใกล้เคียง</h2>
+            <h2>รายการที่ใกล้เคียง</h2>
             <ul className="tick-list">
               {related.map((r) => (
                 <li key={r.slug}>

@@ -192,6 +192,29 @@ input:focus-visible {
   .card-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* The knowledge index is one long single column at every width: visitors
+   arrive looking for the one thing they just saw on their tree, and scanning
+   a single column beats hunting across a grid. */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* "So what do I do now" — the line that makes "ผิดปกติ" actionable. */
+.next-action {
+  border-left: 6px solid var(--grey-300);
+  background: var(--leaf-100);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.next-action-healthy  { border-left-color: var(--leaf-500); }
+.next-action-watch    { border-left-color: var(--durian-500); background: #fff8e1; }
+.next-action-moderate { border-left-color: var(--warn-500); background: #fdf1e3; }
+.next-action-severe   { border-left-color: var(--danger-600); background: #fdeceb; }
+
 .card h3 { margin-bottom: 6px; }
 
 .card-sub {
