@@ -231,11 +231,15 @@ def photo_quick_reply() -> Dict[str, Any]:
 
 
 def default_quick_reply() -> Dict[str, Any]:
+    """Mirrors the three Rich Menu buttons that send a message, so the
+    fallback nudge offers the same choices the menu does."""
     return {
         "items": [
             {"type": "action",
-             "action": {"type": "message", "label": "📷 ตรวจโรค",
-                        "text": M.KEYWORD_DIAGNOSE}},
+             "action": {"type": "camera", "label": M.BTN_TAKE_PHOTO}},
+            {"type": "action",
+             "action": {"type": "message", "label": "❓ วิธีใช้งาน",
+                        "text": M.KEYWORD_HOW_TO_USE}},
             {"type": "action",
              "action": {"type": "message", "label": "📚 คลังความรู้",
                         "text": M.KEYWORD_KNOWLEDGE}},
@@ -273,6 +277,38 @@ def build_how_to_photo_bubble(image_url: Optional[str] = None) -> Dict[str, Any]
         header=_header("ถ่ายรูปยังไงให้หมอดูออก", None, T.LEAF_700),
         body_contents=body,
         hero=_hero(image_url),
+    )
+
+
+def build_how_to_use_bubble() -> Dict[str, Any]:
+    """Shown by the Rich Menu's วิธีใช้งาน button.
+
+    With no dedicated "ตรวจโรคทุเรียน" button on the menu any more, this card
+    is where a first-time user learns that sending a photo is the whole
+    interaction -- so it ships with the camera quick-reply attached.
+    """
+    body = [_text(M.HOW_TO_USE_TITLE, size=T.SIZE_HEADING, weight="bold",
+                  color=T.LEAF_700)]
+    body.append({
+        "type": "box", "layout": "vertical", "margin": "md", "spacing": "md",
+        "contents": [
+            {
+                "type": "box", "layout": "baseline", "spacing": "sm",
+                "contents": [
+                    {"type": "text", "text": f"{i}.", "size": T.SIZE_BODY,
+                     "color": T.DURIAN_500, "weight": "bold", "flex": 0},
+                    {"type": "text", "text": step, "size": T.SIZE_BODY,
+                     "color": T.INK_900, "wrap": True, "flex": 1},
+                ],
+            }
+            for i, step in enumerate(M.HOW_TO_USE_STEPS, start=1)
+        ],
+    })
+    body.append(_text(M.HOW_TO_USE_FOOTER, size=T.SIZE_BODY,
+                      color=T.GREY_600, margin="lg"))
+    return _bubble(
+        header=_header("หมอทุเรียนใช้ยังไง", None, T.LEAF_700),
+        body_contents=body,
     )
 
 

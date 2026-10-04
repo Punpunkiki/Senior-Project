@@ -178,6 +178,30 @@ def test_diagnose_keyword_prompts_for_photo_and_sets_state(make_service):
     assert svc.state.get(USER) is ConversationState.WAITING_IMAGE
 
 
+def test_how_to_use_keyword_explains_and_offers_camera(make_service):
+    """The Rich Menu's วิธีใช้งาน button is the first-time entry point now
+    that there is no dedicated ตรวจโรคทุเรียน button on the menu."""
+    svc = make_service()
+    svc.handle_event(_text_event(M.KEYWORD_HOW_TO_USE))
+
+    out = _flex(svc.replies[0][0])
+    text = json.dumps(out.container, ensure_ascii=False)
+    assert M.HOW_TO_USE_STEPS[1] in text          # "ส่งรูปเข้ามาในแชทนี้ได้เลย"
+    actions = {i["action"]["type"] for i in out.quick_reply["items"]}
+    assert "camera" in actions
+    assert svc.state.get(USER) is ConversationState.WAITING_IMAGE
+
+
+def test_retired_menu_keywords_still_route(make_service):
+    """ตรวจโรคทุเรียน and ติดต่อเจ้าหน้าที่ left the Rich Menu but are still
+    sent by the footer buttons on every result card, so dropping their
+    handlers would break those buttons."""
+    for keyword in (M.KEYWORD_DIAGNOSE, M.KEYWORD_CONTACT):
+        svc = make_service()
+        svc.handle_event(_text_event(keyword))
+        assert len(svc.replies) == 1, f"{keyword} produced no reply"
+
+
 def test_how_to_photo_keyword_does_not_change_state(make_service):
     svc = make_service()
     svc.handle_event(_text_event(M.KEYWORD_HOW_TO_PHOTO))

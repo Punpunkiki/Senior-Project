@@ -152,7 +152,19 @@ class LineService:
         with get_session() as session:
             upsert_user(session, user_id)
 
-        if text == M.KEYWORD_DIAGNOSE:
+        if text == M.KEYWORD_HOW_TO_USE:
+            # The menu's entry point for a first-time user. Sets the waiting
+            # state and offers the camera straight away, because this card
+            # replaced the old dedicated "ตรวจโรคทุเรียน" button.
+            self.state.set(user_id, ConversationState.WAITING_IMAGE)
+            self.reply(event.reply_token, [OutgoingFlex(
+                alt_text=M.HOW_TO_USE_TITLE,
+                container=B.build_how_to_use_bubble(),
+                quick_reply=B.photo_quick_reply(),
+            )])
+        elif text == M.KEYWORD_DIAGNOSE:
+            # No longer a menu button, but still sent by the "ตรวจรูปใหม่"
+            # footer button on every result card.
             self.state.set(user_id, ConversationState.WAITING_IMAGE)
             self.reply(event.reply_token, [OutgoingFlex(
                 alt_text=M.HOW_TO_PHOTO_TITLE,

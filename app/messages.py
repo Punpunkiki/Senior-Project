@@ -11,10 +11,23 @@ Menu too (see line-assets/HANDOFF.md).
 """
 from __future__ import annotations
 
-# --- Rich Menu keywords (must match the menu buttons byte-for-byte) -------
-KEYWORD_DIAGNOSE = "ตรวจโรคทุเรียน"
-KEYWORD_HOW_TO_PHOTO = "วิธีถ่ายรูป"
+# --- Keywords the webhook routes on ---------------------------------------
+# The Rich Menu has four buttons. Three of them send one of these strings and
+# must match byte-for-byte; the fourth opens the website directly with a URI
+# action and never reaches the webhook:
+#
+#   ลิ้งค์ไปเว็บไซต์   -> URI action, no keyword
+#   วิธีใช้งาน         -> KEYWORD_HOW_TO_USE
+#   คลังความรู้        -> KEYWORD_KNOWLEDGE
+#   วิธีถ่ายรูป        -> KEYWORD_HOW_TO_PHOTO
+#
+# DIAGNOSE and CONTACT are no longer menu buttons, but both are still sent by
+# the footer buttons on every result card ("ตรวจรูปใหม่" / "ปรึกษาเจ้าหน้าที่"),
+# so their handlers stay. See line-assets/HANDOFF.md.
+KEYWORD_HOW_TO_USE = "วิธีใช้งาน"
 KEYWORD_KNOWLEDGE = "คลังความรู้"
+KEYWORD_HOW_TO_PHOTO = "วิธีถ่ายรูป"
+KEYWORD_DIAGNOSE = "ตรวจโรคทุเรียน"
 KEYWORD_CONTACT = "ติดต่อเจ้าหน้าที่"
 
 # --- Shared disclaimer (must appear on every diagnosis result) -----------
@@ -34,6 +47,18 @@ HOW_TO_PHOTO_TIPS = [
 HOW_TO_PHOTO_FOOTER = "พร้อมแล้วกดปุ่มด้านล่างเพื่อส่งรูปได้เลยครับ"
 
 SEND_PHOTO_PROMPT = "ส่งรูปใบ กิ่ง ลำต้น หรือผลที่สงสัยมาได้เลยครับ"
+
+# --- How to use ----------------------------------------------------------------
+# The menu no longer carries a dedicated "ตรวจโรคทุเรียน" button, so this card
+# carries the job of telling a first-time user that sending a photo straight
+# into the chat is all they have to do.
+HOW_TO_USE_TITLE = "ใช้งานยังไง"
+HOW_TO_USE_STEPS = [
+    "ถ่ายรูปใบ กิ่ง ลำต้น หรือผลที่ดูผิดปกติครับ",
+    "ส่งรูปเข้ามาในแชทนี้ได้เลย ไม่ต้องกดเมนูอะไรก่อน",
+    "รอสักครู่ หมอจะตอบว่าน่าจะเป็นอะไร และต้องรีบจัดการไหม",
+]
+HOW_TO_USE_FOOTER = "ส่งได้ทีละรูปเลยครับ ถ่ายหลายมุมยิ่งดี"
 
 # --- Result copy ----------------------------------------------------------------
 RESULT_CONFIDENT_PREFIX = "ตรวจพบ"

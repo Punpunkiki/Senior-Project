@@ -1,0 +1,123 @@
+{
+  "type": "bubble",
+  "size": "mega",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "backgroundColor": "#1F5F3A",
+    "paddingAll": "16px",
+    "spacing": "xs",
+    "contents": [
+      {
+        "type": "text",
+        "text": "หมอทุเรียนใช้ยังไง",
+        "size": "xxl",
+        "color": "#FFFFFF",
+        "wrap": true,
+        "weight": "bold",
+        "margin": "sm"
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "paddingAll": "16px",
+    "backgroundColor": "#FFFFFF",
+    "contents": [
+      {
+        "type": "text",
+        "text": "ใช้งานยังไง",
+        "size": "lg",
+        "color": "#1F5F3A",
+        "wrap": true,
+        "weight": "bold"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "spacing": "md",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "1.",
+                "size": "md",
+                "color": "#F2B705",
+                "weight": "bold",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ถ่ายรูปใบ กิ่ง ลำต้น หรือผลที่ดูผิดปกติครับ",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "2.",
+                "size": "md",
+                "color": "#F2B705",
+                "weight": "bold",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "ส่งรูปเข้ามาในแชทนี้ได้เลย ไม่ต้องกดเมนูอะไรก่อน",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "3.",
+                "size": "md",
+                "color": "#F2B705",
+                "weight": "bold",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "รอสักครู่ หมอจะตอบว่าน่าจะเป็นอะไร และต้องรีบจัดการไหม",
+                "size": "md",
+                "color": "#1E2A1E",
+                "wrap": true,
+                "flex": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "text": "ส่งได้ทีละรูปเลยครับ ถ่ายหลายมุมยิ่งดี",
+        "size": "md",
+        "color": "#6B7280",
+        "wrap": true,
+        "margin": "lg"
+      }
+    ]
+  }
+}

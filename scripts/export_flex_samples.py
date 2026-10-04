@@ -37,6 +37,7 @@ def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     samples = {
+        "how-to-use": B.build_how_to_use_bubble(),
         "how-to-photo": B.build_how_to_photo_bubble(),
         "result-confident-disease": B.build_result_bubble(
             kb.by_class("Anthracnose"), 0.91, detail_url=DETAIL),
