@@ -178,6 +178,8 @@ The classifier is wrapped, unmodified, into a LINE Official Account that
 farmers use from their phone: send a photo of the affected leaf, branch,
 trunk or fruit, get a preliminary assessment back with what to do next.
 
+- **เริ่มจากศูนย์ (ภาษาไทย):** [`docs/START-HERE.md`](docs/START-HERE.md) —
+  clone → ลงของ → วางไฟล์โมเดล → ต่อ LINE → ทดสอบ ทีละขั้นจนใช้งานได้
 - **Deploy and setup guide (ภาษาไทย):** [`docs/DEPLOY.md`](docs/DEPLOY.md) —
   local + ngrok, Docker, Cloud Run, and how to add a new entry.
 - **LINE OA Manager handoff (ภาษาไทย):**
