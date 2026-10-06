@@ -34,7 +34,14 @@ class Settings(BaseSettings):
     config_yaml_path: str = str(REPO_ROOT / "config.yaml")
     # Which of the 3 trained backbones to serve (name must match
     # config.yaml -> models[].name and have outputs/<model_name>/best.pt).
-    model_name: str = "efficientnet_b0"
+    #
+    # convnextv2_tiny is the model the comparison selected ([DL-FINAL], see
+    # reports/RESULTS.md §3): tied with swin_tiny on accuracy to within 4 of
+    # 633 test images, but 30% better calibrated after temperature scaling
+    # and five times more consistent in latency. Calibration is what this
+    # product actually runs on -- every reply the bot gives is chosen by a
+    # confidence threshold.
+    model_name: str = "convnextv2_tiny"
 
     # --- Confidence tiers ---------------------------------------------------
     # Fixed UX cutoffs (product decision), independent of the training
